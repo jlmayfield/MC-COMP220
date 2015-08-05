@@ -1,0 +1,87 @@
+\documentclass[10pt]{article}
+\usepackage{amsmath}
+\usepackage{setspace}
+\usepackage{hyperref}
+
+\setlength{\textheight}{9in} \setlength{\topmargin}{-.5in}
+\setlength{\textwidth}{6.5in} \setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+
+\title{COMP220 - VNC Sessions and SSH Tunnels}
+\author{James \textit{Logan} Mayfield  }
+\date{Fall 2014}
+
+\begin{document}
+\maketitle
+
+\section{Unencrypted VNC Step-by-step}
+
+The follow steps will set up an insecure, remote desktop to the server.
+\begin{enumerate}
+\item (\textbf{Do only once}). Configure and launch your VNC desktop server
+\begin{enumerate}
+\item Log in to the server using SSH.
+\item Launch your VNC server session:
+\begin{verbatim}
+(no frills. default options)
+> vncserver
+
+(set desktop size to 1024x768. Can use other sizes. )
+> vncserver -geometry 1024x768
+\end{verbatim}
+Read the \textit{vncserver} man page for more options.  There are a few things you need to look for when launching your desktop server:
+\begin{itemize}
+\item The very first time you launch \textit{vncserver} you'll have to set a password.  This password is \textit{only for logging in to your vncserver session} and for security reasons \textbf{\textit{should not match the password you use to log in with ssh.}}.  You can use the command \textit{vncpasswd} to change this password (read the man page).
+\item When you launch your desktop the resultant output will tell you a new desktop is launched and call it something like \textit{church:1}.  The number, in this case 1, is your \textit{desktop number}. The name is just the name of the server itself. \textit{\textbf{Remember your desktop number}}
+\item If you ever want to end your desktop session, then you can use the \textit{-kill} command. If your desktop number is $3$, then
+\begin{verbatim}
+> vncserver -kill :3
+\end{verbatim}
+will shutdown the vncserver. In general, you can leave the session running indefinitely. 
+\end{itemize}
+\item Once you've launched your vnc server you can exit your SSH session. The VNC server will stay running in the background.
+\end{enumerate}
+
+\item Logging in to the desktop using RealVNC.
+\begin{enumerate}
+\item Locate and launch RealVNC viewer. (Can be downloaded for free from \url{http://www.realvnc.com/download/viewer/}). 
+\item If your desktop number is $n$ then the server you're connecting to is \textbf{\textit{cs.monm.edu:$n$}}. When prompted give your \textit{vnc password, not your SSH password.}
+\end{enumerate}
+\end{enumerate}
+At this point you should see a new window showing a desktop.  The desktop environment is called XFCE. It's meant to be lightweight and therefore easy to push over a network.  As you can tell, it's not big on the bells and whistles.  Pretty much all you need to know is that left clicking on the desktop will bring up the main menu from which you can launch new terminals and programs.  
+
+\newpage
+\section{Securing VNC with SSH}
+
+There are two reasons to run your VNC server through an SSH tunnel. 
+\begin{enumerate}
+\item VNC traffic is unencrypted and data will be sent across the web in the clear. This is why you should not use the same password for VNC and SSH. If you're a security conscious user, and you should be, then you should want to secure your VNC session.
+\item Open, insecure VNC sessions have a tendency to fall prey to brute-force login attempts. This means someone will invariably try common username and password combos on your session in order to gain access to your session and thereby the server. It's unlikely they'll guess your username and password. So, the result of these attacks is effectively a Denial of Server. The VNC server will lock itself down for a very long period. This causes you to have to manually kill the server and restart.  If you want to avoid this, then secure your session with the instructions below; they effectively make your VNC server invisible to the web. 
+\end{enumerate}
+
+The following instructions allow you to setup a secure vnc session using Windows and PuTTy to establish SSH connections.
+\begin{enumerate}
+\item On the server: Configure and launch your vnc sever for localhost only connections. (Again, do only once)
+\begin{verbatim}
+> vncserver -localhost -geometry 1024x768
+\end{verbatim}
+\item On the client: Setup an SSH tunnel with PuTTy. 
+\begin{enumerate}
+\item Go to Connection $>$ SSH $>$ Tunnels. If your desktop number is $n$ then your desktop port number is $59n$ with $n$ expressed in two digits. For example, desktop $3$ has port number $5903$. 
+\begin{itemize}
+\item Source Port: $59n$ (i.e. your desktop port. This can be other numbers, but this is as ``safe'' choice)
+\item Destination: \textit{localhost:$59n$}.  The number after the colon must be your desktop port.
+\end{itemize}
+You'll probably want to save the settings for this PuTTy Connection so that you don't have to repeat this step every time you connect.
+\item Using PuTTY with the tunnel configuration, connect to server and \textit{leave the SSH connection open} in the background.
+\end{enumerate}
+\item Using your VNC client, connect to the server but rather than \textit{cs.monm.edu:$n$} use \textit{localhost:59$n$} or whatever the destination for your tunnel happened to be.
+\end{enumerate}
+
+\subsection*{Tunnels in *nix and OS-X}
+If you're using *nix or OS-X, then an SSH tunnel can be setup via the command-line. Let's say your server username is \textit{joeshmo} and your VNC desktop number is $10$. Then, on your personal machine, you'd use the following terminal command to establish an SSH tunnel to your vnc server:
+\begin{verbatim}
+ssh -Nf joeschmo@cs.monm.edu -L 5910:localhost:5910
+\end{verbatim}
+Setting up the VNC server itself is the same. Just use the \textit{-localhost} option. For more details on SSH servers read the \textit{ssh} man page. You might also check out the program \textit{autossh} which can be used to setup and maintain tunnels and SSH connections. 
+\end{document}
