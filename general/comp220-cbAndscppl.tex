@@ -1,0 +1,32 @@
+\documentclass[10pt]{article}
+\usepackage{amsmath}
+\usepackage{setspace}
+\usepackage{hyperref}
+\usepackage[pdftex]{graphicx}
+
+\setlength{\textheight}{9in} \setlength{\topmargin}{-.5in}
+\setlength{\textwidth}{6.5in} \setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+
+\title{COMP220 - Code::Blocks and the StanfordCPPLib}
+\author{ }
+\date{Fall 2015}
+
+\begin{document}
+\maketitle
+
+\section{ Adding the StanfordCPPLib Library }
+
+The standard C++ libraries like \textit{iostream} are placed on the server in locations that the compiler and linker know to search. The Google testing libraries are installed in the usual places so the compiler has no problem resolving the include. However, the gTest libraries are not standard C++ libraries so we must explicitly include link options for their compiled objects. When we write our own libraries we use quotes in the include and this directs the compiler to search the current working directory.  The linker also has no problem finding the objects for our libraries in the current working directory.  So, what do we do when we have a library that is neither placed in the standard locations nor is it in the current working directory? This is the problem we have with the StanfordCPPlib.
+
+It's not uncommon to use libraries that cannot be installed system wide. It's also not uncommon to use those libraries in multiple projects. What we want to avoid is copy the library files into each project. To do this we must:
+\begin{itemize}
+\item Direct the compiler and linker to search in the directories where headers and objects are stored. 
+\item Directly link any pre-compiled library code into the project.
+\end{itemize}
+
+In what follows 
+
+\subsection{ Building StanfordCPPLib }
+
+\end{document}

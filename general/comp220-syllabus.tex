@@ -1,6 +1,7 @@
 \documentclass[10pt]{article}
 \usepackage{amsmath}
 \usepackage{setspace}
+\usepackage{hyperref}
 
 \setlength{\textheight}{9in} \setlength{\topmargin}{-.5in}
 \setlength{\textwidth}{6.5in} \setlength{\oddsidemargin}{0in}
@@ -37,11 +38,17 @@ Roberts, Eric S.  \textit{Programming Abstractions in C++}. Pearson/Prentice Hal
 %insert text #2 
 
 \section{Programming Environment}
-This course utilizes the Code::Blocks IDE and the GNU compiler for C++ development.  All programs written in this course are required to compile and run on an Ubuntu server.  All students will have access to the departmental server and thereby the above development tools.  While development is not required in this environment, \emph{failure to properly port a program to the required environment could result in your program not compiling correctly at the time of grading.}  All software for this course is available free of charge and can be found on the web if students wish to install it on their personal machines.  
+
+This course utilizes the Code::Blocks IDE and the GNU compiler for C++ development. 
+\begin{itemize}
+\item \url{http://www.codeblocks.org/}
+\end{itemize}
+
+All programs written in this course are required to compile and run on an Ubuntu server 14.04.  All students will have access to the departmental server and thereby the above development tools.  While development is not required in this environment, \emph{failure to properly port a program to the required environment could result in your program not compiling correctly at the time of grading.}  All software for this course is available free of charge and can be found on the web if students wish to install it on their personal machines.  
 
 \section{Description and Content}
 
-\emph{Students must have successfully completed COMP160 and COMP161 prior to taking this course}.
+\emph{Students must have successfully completed COMP160 and COMP161 with a C or better prior to taking this course}.
 
 Data Structures continues the study of abstraction and programming through a focused study of data structures, algorithms, and abstract data types.  The primary focus of this course is the design and development of algorithms and programs using data abstraction and information hiding via Abstract Data Types \textit{(ADTs)}.  Data abstraction is absolutely fundamental to good programming practice and the management of large scale problems and data sets.  This course is designed to round out a student's understanding of basic computer science concepts while strengthening the program design and development skills through continued use of a test-driven design methodology.
 
@@ -51,20 +58,17 @@ Students will explore the ideas and concepts brought up in class and homework as
 
 \subsection{Content}
 
-Topics covered in COMP220 are:
+Topics covered in COMP220 focus on chapter 5 and beyond from the text. They include but are not limited to:
 \begin{itemize}
-\item Review of C++ Fundamentals [Appendix A]
-\item Data Abstraction [Chapter 1]
-\item C++ Classes [Interlude 1]
-\item ADTs with Arrays [Chapter 3]
-\item Linked Lists [Chapter 4]
-\item Memory Management [Interlude 2]
-\item Stacks [Chapters 6 \& 7]
-\item Lists [Chapters 8 \& 9]
-\item Queues [Chapters 13 \& 14]
-\item Sorted Lists [Chapter 12]
-\item Trees [Chapters 15 \& 16]
+\item Review of C++ Fundamentals
+\item Standard Container Types
+\item Classes and ADT Design
+\item Recursive Algorithm Design and Implementation
+\item Pointer and Array Logic
+\item Dynamic Memory Management
+\item Efficient Implementation of Container Types such as Vectors, Lists, Stacks, Queues, Trees, Maps, Sets, and Graphs.
 \end{itemize}
+
    
 \section{Expectations and Policies}
 The expectations for students in this course are not at all unreasonable.  To avoid any confusion, they are listed here.  These aren't necessarily rules but rather guidelines for how you should conduct yourself in this class.  Strict rules will result from these expectations and will be covered later.
@@ -100,69 +104,74 @@ All of the Monmouth College rules on academic dishonesty apply.  If you violate 
 \newpage
 \section{Grades}
 
-This courses adheres to the Mathematics and Computer Science grade scale.  Assignments and final grades will not be curved except when deemed necessary by the instruction.  Percentage grades translate to letter grades as follows:
-\newline
+This courses uses a standard grading scale.  Assignments and final grades will not be curved except in rare cases when its deemed necessary by the instructor.  Percentage grades translate to letter grades as follows:
+
+\begin{center}
 \begin{small}
-\begin{tabular}{lc}
-94-100 & A \\
-90-93 & A- \\
-88-89 & B+ \\
-82-87 & B \\
-79-81 & B- \\
-76-78 & C+ \\
-70-75 & C \\
-67-69 & C- \\
-64-66 & D+ \\
-58-63 & D \\
-55-57 & D- \\
-0-54 & F 
+\begin{tabular}{lcl}
+Score & & Grade \\ \hline
+94-100 & & A \\
+90-93 & & A- \\
+88-89 & & B+ \\
+82-87 & & B \\
+80-81 & & B- \\
+78-79 & & C+ \\
+72-77 & & C \\
+70-71 & & C- \\
+68-69 & & D+ \\
+62-67 & & D \\
+60-61 & & D- \\
+0-59 & & F 
 \end{tabular}
 \end{small}
-\newline
-You are always welcome to challenge a grade that you feel is unfair or calculated incorrectly.  Mistakes made in your favor will never be corrected to lower your grade.  Mistakes made not in your favor will be corrected.  \textit{Basically, after the initial grading your score can only go up as the result of a challenge.}
+\end{center}
 
-\subsection{Grade Weights}
-Your final grade is based on a weighted average of particular assignment categories.  You should be able to estimate your current grade based on your scores and these weights.  You may always visit the instructor \textit{outside of class time} to discuss your current standing.  
-\begin{itemize}
-\item Quizzes - 20\%
-\item Projects - 25\%
-\item Final - 10\%
-\item Midterm - 10\%
-\item Homework - 15\%
-\item Labs - 15\%
-\item Participation - 5\%
-\end{itemize}
+
+You are always welcome to challenge a grade that you feel is unfair or calculated incorrectly.  Mistakes made in your favor will never be corrected to lower your grade.  Mistakes made not in your favor will be corrected.  \textit{Basically, after the initial grading your score can only go up as the result of a challenge.}
 
 \subsection{Workload}
 % number of/details on midterms, finals, project, homeworks, quizes, etc
+
 The course workload is as follows:
 \begin{itemize}
-\item 10 Labs
-\item 1 Homework Set*
+\item 10 Labs with 8-10 corresponding Homework assignments
 \item 4 Quizzes
 \item 2 Projects
 \item 1 Final Exam
 \item 1 Midterm Exam
 \end{itemize}
 
-\subsubsection{Homework}
+Labs will often be followed by or proceeded by a homework assignment.  Typically this is either preparation for the lab or required completion of the lab. Students are also encouraged to look at the text's review questions as the solutions are available online.  The instructor will also identify key problems from each chapter that make for good practice/study problems. 
 
-For each chapter of the text, a set of problems the students should study will be identified.  Students are expected to work on at least some of these problems and all the work done on these problems should be kept in either a notebook on their own or loose-leaf paper in a binder together.  Occasionally, during lab, the instructor will check to see that sufficient work has been done on these problems and that the work is of satisfactory quality. At this time, the homework set will be graded as a whole.  The average of these "checkpoint" grades will be the student's homework grade.  
+
+\subsection{Grade Weights}
+
+Your final grade is based on a weighted average of particular assignment categories.  You should be able to estimate your current grade based on your scores and these weights.  You may always visit the instructor \textit{outside of class time} to discuss your current standing.  
+\begin{itemize}
+\item Quizzes - 25\%
+\item Projects - 25\%
+\item Final - 10\%
+\item Midterm - 10\%
+\item Homework - 12.5\%
+\item Labs - 12.5\%
+\item Participation - 5\%
+\end{itemize}
+
 
 \subsection{Course Engagement Expectations}
 
-The weekly workload for this course will vary by student but on average should be about 12.5 hours per week.  The follow tables provides a rough estimate of the distribution of this time over different course components for a 15 week semester. 
+The weekly workload for this course will vary by student but on average should be about 13 hours per week.  The follow tables provides a rough estimate of the distribution of this time over different course components for a 15 week semester. 
 \begin{center}
 \begin{tabular}{|l|l|l|}
 \hline
 Lectures+Labs+Final &      & 4.2 hours/week \\ 
-Homework & 30 hours        & 2 hours/week \\
+Homework & 45 hours        & 3 hours/week \\
 Exam Study Time & 8 hours  & 0.5 hours/week \\ 
-Quiz Study Time & 10 hours & 0.6 hours/week \\
-Projects & 48 hours        & 3.2 hours/week \\
+Quiz Study Time & 8 hours & 0.5 hours/week \\
+Projects & 45 hours        & 3 hours/week \\
 Reading+Unstructured Study & & 2 hours/week \\
 \hline
-& & 12.5 hours/week \\ 
+& & 13.2 hours/week \\ 
 \hline
 \end{tabular}
 \end{center}
@@ -176,35 +185,35 @@ The following calendar should give you a feel for how work is distributed throug
 \hline 
 Week & Dates & Assignments \\
 \hline
-1 & 8/25 - 8/28 &  \\
+1 & 8/25 - 8/28 &  Lab 1. \\
 \hline 
-2 & 8/31 - 9/4 &   \\
+2 & 8/31 - 9/4 &   Lab 2. \\
 \hline
-3 & 9/7 - 9/11 &   \\
+3 & 9/7 - 9/11 &   Quiz 1. Lab 3.\\
 \hline
-4 & 9/14 - 9/18 &   \\
+4 & 9/14 - 9/18 &  Lab 4. \\
 \hline
-5 & 9/21 - 9/25 &  \\
+5 & 9/21 - 9/25 &  Quiz 2. Project Lab.\\
 \hline
-6 & 9/28 - 10/2 & \\
+6 & 9/28 - 10/2 & Project 1 Due.\\
 \hline
-7 & 10/5 - 10/9  &  \\
+7 & 10/5 - 10/9  &  Lab 5\\
 \hline 
-8 & 10/12 - 10/15 &  FALL BREAK (F) \\
+8 & 10/12 - 10/15 &  Midterm Exam. Lab 6. FALL BREAK (F) \\
 \hline
-9 & 10/21 - 10/23 & FALL BREAK (M,Tu) \\
+9 & 10/21 - 10/23 & FALL BREAK (M,Tu) Lab 7. \\
 \hline
-10 & 10/26 - 10/30 &  \\
+10 & 10/26 - 10/30 &  Quiz 3. Lab 8 .\\
 \hline
-11 & 11/2 - 11/6 & \\
+11 & 11/2 - 11/6 & Lab 9.\\
 \hline
-12 & 11/9 - 11/13 &  \\
+12 & 11/9 - 11/13 & Lab 10. Quiz 4.\\
 \hline
-13 & 11/16 - 11/20 & \\
+13 & 11/16 - 11/20 & Project Lab.\\ 
 \hline
 14 & 11/23 - 11/24 &  THANKSGIVING BREAK (W-F).   \\
 \hline
-15 & 11/30 - 12/4 & \\ 
+15 & 11/30 - 12/4 & Project Due. Quiz 5.\\ 
 \hline
 16 & 12/7 - 12/9 &   Reading Day (Th). \\
 \hline
