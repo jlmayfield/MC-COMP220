@@ -1,0 +1,39 @@
+\documentclass[10pt]{article}
+\usepackage{amsmath}
+\usepackage{setspace}
+\usepackage{hyperref}
+
+\setlength{\textheight}{9in} \setlength{\topmargin}{-.5in}
+\setlength{\textwidth}{6.5in} \setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+
+\title{COMP220 - Lab 4 \& Homework 4}
+\author{ }
+\date{Fall 2015}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This lab requires zero programming and will be done in psuedo-randomly assigned groups. Your goal is to analyze problems, determine the merits of different ADTs in the contexts of those problems, and decide on the best choice of ADT. One person in your group should record your notes in a text file that is submitted as assignment \textit{lab5} at the end of the lab. \textbf{Be certain to put everyone's name on the document!}
+\end{abstract}
+
+
+\section{The Problems}
+
+You'll be working with problems 6, 12, 13, 14, 19, 22, and 25 from Chapter 5 of the text. Take a moment to familiarize yourself with them. Do not feel as though you have to proceed through them in any kind of ordered fashion. In fact, try working them in least to most obvious order. 
+
+\section{The Analysis}
+
+Begin by looking at the problem, envisioning some kind of concrete test case, and paying careful attention to the following details:
+\begin{itemize}
+\item What type of data are you collecting? What goes in the ADT? 
+\item What types of \textit{abstract} operations do you need to perform most? Add? Remove? Access? 
+\item Is there a pattern to the common operations? If so, does it imply an ADT? 
+\end{itemize}
+The exercise is about working from problem to program. \textit{Don't fit the problem to any one ADT. Fit the ADT to the problem.}
+
+Once you think you've identified the core ADT(s) needed to solve the problem, take a moment and identify the \textit{critical operation}: the ADT operation called most in the process of solving the problem. If we can determine how often it is called, we can often get a pretty good feel for the \textit{run-time efficiency} of the solution (algorithm) with respect to the operation's performance. 
+
+
+\end{document}
