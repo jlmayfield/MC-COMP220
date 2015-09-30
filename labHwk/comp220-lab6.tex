@@ -1,0 +1,32 @@
+\documentclass[10pt]{article}
+\usepackage{amsmath}
+\usepackage{setspace}
+\usepackage{hyperref}
+
+\setlength{\textheight}{9in} \setlength{\topmargin}{-.5in}
+\setlength{\textwidth}{6.5in} \setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+
+\title{COMP220 - Lab 6}
+\author{ }
+\date{Fall 2015}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+For this lab you'll work with the Grid class (pg 210) and practice doing an important traversal pattern in which for each spot in a grid you'll examine all the neighboring locations. This pattern is used in many imagine processing contexts as well as the famous Conway's Game of Life.
+\end{abstract}
+
+\section{Problem and Adaptations}
+
+The problem you'll be dealing with is the Minesweeper problem listed in chapter 5 exercise 10. Your solution should:
+\begin{itemize}
+\item Work on any size grid
+\item Utilize a helper procedure named \textit{getCount} (which you must design and write) that is given the grid\textit{mines} (as discussed in the book) and a \textit{row} and \textit{column} index. It then returns the mine count for the location \textit{mines[row][col]}. Note this helper is the core logic to the whole problem. With it written, \textit{fixCounts} just becomes a simple matter of ``visit each spot in \textit{mines}, run \textit{getCounts}, and set the return value to the appropriate location in \textit{counts}''.
+\end{itemize}
+After you document, declare, stub, and write tests for both procedures. Focus your implementation efforts on the helper. By the end of the day, submit your work as assignment \textit{lab6}. There is no homework, but you're strongly encouraged to finish this assignment up as you can get a lot of mileage from these ``neighborhood'' based traversal patterns.
+
+ 
+
+\end{document}
