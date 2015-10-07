@@ -1,0 +1,86 @@
+\documentclass[10pt]{article}
+\usepackage{amsmath}
+\usepackage{setspace}
+\usepackage{hyperref}
+
+\setlength{\textheight}{9in} \setlength{\topmargin}{-.5in}
+\setlength{\textwidth}{6.5in} \setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+
+\title{COMP220 - Lab 7 \& Hwk 6}
+\author{ }
+\date{Fall 2015}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+For this lab you'll carry out Exercise 2 in chapter 6 of the text (pg 307). This exercise gives you practice doing basic class-based ADT design and exposes you to C++11 enumerated class types (\textit{enum class}). Traditional enumerated types are discussed in chapter 1 section 6 (pg 24).  The C++11 standard offers an improved enumerated type design so we'll go ahead with this updated, C++11 version. I recommend you checkout \url{http://www.cprogramming.com/c++11/c++11-nullptr-strongly-typed-enum-class.html} to get a feel for the how and why of the \textit{enum class} for C++11.
+\end{abstract}
+
+\section{The Problem}
+
+When the author says ``export'' he means provide the declaration and definition in an accessible way. For class methods, this means making public class methods. For Constants, this means declaring constant variables, for enum types, this means declaring the type. We will also use the C++11 \textit{enum class} as opposed to strict \textit{enum}. 
+
+
+For example, putting something like the following in a header will ``export'' 
+\begin{itemize}
+\item the constant \textit{example::PI\_FOR\_INDIANA}
+\item the enum class \textit{example::Suit}
+\item and the class \textit{example::myClass}
+\end{itemize}
+
+\begin{verbatim}
+namespace example{
+
+   // a constant double for "pi"
+   const double PI_FOR_INDIANA = 3.2;
+	
+   // the suit enum
+   enum class Suit = { CLUBS, DIAMONDS, HEARTS, SPADES };
+	
+   class myClass{
+      // class declaration code in here	
+   };
+}
+\end{verbatim}
+
+You can then refer to these definitions in the usual manner:
+\begin{verbatim}
+
+TEST(stuff,all){
+
+  //constants value by name
+  EXPECT_DOUBLE_EQ(3.2,example::PI_FOR_INDIANA);
+
+  // the enumerated values by name  
+  EXPECT_EQ(0,example::Suit::CLUBS);
+  EXPECT_EQ(1,example::Suit::DIAMONDS);
+  EXPECT_EQ(2,example::Suit::HEARTS);
+  EXPECT_EQ(3,example::Suit::SPADES);   
+
+  // Using the new class	
+  example::myClass a;
+  example::myClass b;
+  EXPECT_EQ(a,b);	
+  
+}
+\end{verbatim}
+It's important to note that constant and enum class definitions do not require anything additional code in the library cpp file. They're completely defined in the header.  This is different than procedures and classes.
+
+In addition to carrying out the requirements as stated in the book, you must:
+\begin{itemize}
+\item overload the $==$ and $!=$ operator for the Card ADT
+\item write mutators/setters \textit{setRank} and \textit{setSuit}. 
+\end{itemize}
+
+Some other things you might try (but do not have to for lab/hwk) include:
+\begin{itemize}
+\item Overload \textit{operator$<$} for comparing cards. Suits are ranked in alphabetical order, i.e. the same order we declared them in the enum class above.
+\item Overload the operators $<<$ and $>>$ for writing and reading cards to streams. 
+\end{itemize}
+
+For lab, focus on the declarations, documentations, stubs, and tests. Submit these items as \textit{lab7} using \textit{handin}. Complete the implementation by Monday and submit as \textit{hwk6}.
+
+
+\end{document}
