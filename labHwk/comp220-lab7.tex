@@ -82,5 +82,27 @@ Some other things you might try (but do not have to for lab/hwk) include:
 
 For lab, focus on the declarations, documentations, stubs, and tests. Submit these items as \textit{lab7} using \textit{handin}. Complete the implementation by Monday and submit as \textit{hwk6}.
 
+\section{Notes}
+
+It's a good time to practice using test fixtures.  If you're going to start using \textit{throw}, then you should start testing for errors.  However, for gTest to detect the \textit{throw} we must actually throw something. The easiest, way to do that is to do:
+\begin{verbatim}
+throw std::exception();
+\end{verbatim}
+where ever you want to raise an error. You can find documentation on fixtures and testing errors at the these links:
+\begin{itemize}
+\item Fixtures: \scriptsize{\url{https://code.google.com/p/googletest/wiki/Primer#Test_Fixtures:_Using_the_Same_Data_Configuration_for_Multiple_Te}}
+\item Tests for Exceptions: \scriptsize{\url{https://code.google.com/p/googletest/wiki/AdvancedGuide#Exception_Assertions}}
+\end{itemize}
+
+To make the \textit{main} procedure code given in the book work with an \textit{enum class} we have to do some explicit type conversion, aka \textit{static\_cast}. Basically, an enum class type cannot be automatically converted to and from an integer implicitly. Here's the new code:
+\begin{verbatim}
+
+for(int suit = static_cast<int>(lab7::Suit::CLUBS); suit <= static_cast<int>(lab7::Suit::SPADES); ++suit){
+  for(int rank = lab7::ACE; rank <= lab7::KING; ++rank){
+       std::cout << " " << lab7::Card(rank,static_cast<lab7::Suit>(suit));
+  }
+}
+\end{verbatim}
+
 
 \end{document}
