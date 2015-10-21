@@ -1,0 +1,77 @@
+\documentclass[10pt]{article}
+\usepackage{amsmath}
+\usepackage{setspace}
+\usepackage{hyperref}
+
+\setlength{\textheight}{9in} \setlength{\topmargin}{-.5in}
+\setlength{\textwidth}{6.5in} \setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+
+\title{COMP220 - Midterm Corrections \& Homework 7}
+\author{ }
+\date{Fall 2015}
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+
+\begin{abstract}
+The midterm was less than successful and having a more complete understanding of the material covered in it is vital to moving forward successfully. You're all going to get another crack at these problems and quality work will boost your midterm score. For homework, you'll be asked to use one of the midterm procedures to do a basic file I/O program. If you need a refresher on File I/O, it's covered in the text, the online reference, and you're welcome to come to Office Hours for help. 
+\end{abstract}
+
+\section{Midterm Corrections}
+
+\begin{center}
+\textbf{Submit source code using handin as \textit{exam1} \\ by 5pm on Monday 10/26} 
+\end{center}
+
+To recoup some points on the midterm exam you must do the following:
+\begin{enumerate}
+\item Write the complete documentation, declaration, and implementation fo all 4 of the problems given on the exam
+\item Write gTests for all the problem cases (not just the two required on the exam)
+\end{enumerate}
+This work is worth a total of 20 points (5 per problem) and the points earned will be added to your midterm grade. You'll have lab time on 10/22 to work on this. \textit{This work should be your own. Do not work in groups and do not seek help from anyone other than the teacher or lab assistant. You are free to use your book, notes, and the internet.}
+
+\newpage \thispagestyle{empty}
+
+\section{Homework 7}
+
+\begin{center}
+\textbf{Submit source code with handin as \textit{hwk7} \\ by start of lab on 10/29} 
+\end{center}
+
+As homework, you must write a complete program (i.e. a definition of \textit{main}) that utilizes your solution to problem 3 to read in a series of white-space separated words from a file and then print the collected by-letter ``index'' of those words to a different file.  The input and output file names should be specified by the user as command line parameters. For example, assume the program were compiled as the executable \textit{hwk7} and the user invoked the following command:
+
+\begin{verbatim}
+hwk7 somewords.txt somewords-index.txt
+\end{verbatim}
+
+Where the file \textit{somewords.txt} contained the following:
+
+\begin{verbatim}
+this
+is
+the
+example
+i
+guess
+\end{verbatim}
+
+Then the program would write the following to \textit{somewords-index.txt}:
+
+\begin{verbatim}
+e
+  example
+i
+  is
+  i
+g
+  guess
+t
+  this
+  the
+\end{verbatim}
+
+It is OK to have duplicate words in the index. It is also OK to remove the duplicates. The choice is yours. Your are free, and encouraged, to use helper procedures as you see fit in the design of this program.  If your solution to problem 3 doesn't work, you can request a working solution from the teacher. \textit{You should only submit your main and the associated helpers.  Don't resubmit all the midterm code. }
+
+\end{document}
