@@ -237,6 +237,12 @@ These test types are documented in the gTest advanced guide: \url{https://code.g
 
 Any procedure or method that might throw and error should document that error with an @throws annotation.
 
+\subsection{Controlling the gTest Main}
+
+You're likely to have \textit{a lot} of tests  for this project. When you're working one or two procedures you do not want to be distracted by the output for all the tests not relevant for those procedures. The gTest main we link our tests provides a lot of options for controlling what tests get run. It's time you start using those. 
+
+The gTest documentation covers all the important commandline arguments you can use to control the test program here: \url{https://code.google.com/p/googletest/wiki/V1_7_AdvancedGuide#Running_Test_Programs:_Advanced_Options}. The essential argument is \textit{--gtest\_filter} which lets you dictate the tests that get run. 
+
 \section{Be Your Own Client}
 
 Library design is about predicting and understanding the needs of the users, or clients, of the library.  Sometimes you are the client and sometimes not. For this project, we're imaging that you're not the client. We have no real-world application in mind. This library is not something you cooked up to solve some other problem. Your goal is simply to enable a more robust set of number types. Even still, we should come up with some toy problems in which we will be the client of our library. This lets us test the actual usability of our design and acts as a way to test the big picture.  Building a library is building a tool and tools should be as easy to use as possible. 
@@ -281,7 +287,7 @@ Date & Activity \\ \hline
 10/29 & Project 1 Lab \\
 11/2 & Project 1 Lab \textbf{due} at start of class \\
 11/5 & In-Lab Work Time \\
-11/9 & Project \textbf{due}. Submit all source code via handin as assignment \textit{proj1} 
+11/11 & Project \textbf{due} by end of day. Submit all source code via handin as assignment \textit{proj1} 
 \end{tabular}
 \end{center}
 
