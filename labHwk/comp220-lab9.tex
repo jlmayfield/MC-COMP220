@@ -1,0 +1,127 @@
+\documentclass[10pt]{article}
+\usepackage{amsmath}
+\usepackage{setspace}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{
+  %frame=tb,
+  language=C++,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+
+
+\setlength{\textheight}{9in} \setlength{\topmargin}{-.5in}
+\setlength{\textwidth}{6.5in} \setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+
+\title{COMP220 - Lab 9}
+\author{ }
+\date{Fall 2015}
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+
+\begin{abstract}
+This lab has 2 parts. The first is some practice building your intuition about logarithms and logarithmic growth. The later is some pointer practice.
+\end{abstract}
+
+\begin{enumerate}
+\item Fill in the following table in three phases. First without using a calculator, fill in the integer lower and upper bound. If the logarithm is an exact integer, then put that as both the lower and upper bound. Then, take a shot a guessing the logarithm's actual value out to 2 decimal places. Finally, use a calculator to compute the actual log to 2 places and fill that in for the final column. When computing actual logarithms, you may only use the log base 10 function on a calculator. Logarithms with a base less than 10 should be computed using the base conversion formula:
+\[
+\log_b(n) = \dfrac{\log_a(n)}{\log_a(b)}
+\]
+
+\begin{center}
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+Logarithm & Lower Int. & Upper Int. & Guesstimate & Actual Value\\ \hline
+$\log_2(17)$ &  &  &  & \\ 
+ & & & & \\ \hline
+$\log_2(725)$  &  &  &  & \\ 
+ & & & & \\ \hline
+$\log_2(1024)$ &  &  &  & \\ 
+ & & & & \\ \hline
+$\log_2(7)$ &  &  &  & \\ 
+ & & & & \\ \hline
+ $\log_8(7)$ &  &  &  & \\ 
+ & & & & \\ \hline
+$\log_8(178)$ &  &  &  & \\ 
+ & & & & \\ \hline
+$\log_{16}(25)$ &  &  &  & \\ 
+ & & & & \\ \hline
+$\log_{16}(333)$ &  &  &  & \\ 
+ & & & & \\ \hline
+$\log_{10}(15)$ &  &  &  & \\ 
+ & & & & \\ \hline
+$\log_{10}(150)$ &  &  &  & \\ 
+ & & & & \\ \hline
+$\log_{10}(145787)$ &  &  &  & \\ 
+ & & & & \\ \hline
+\end{tabular}
+\end{center}
+\newpage \thispagestyle{empty}
+
+\item The formula for the conversion from one logarithm base to another tells us that for any two bases $a$ and $b$, $\log_a(n)$ differs from $\log_b(n)$ by exactly a factor of $\frac{1}{\log_b(a)}$. Compute this factor for base $a=2$ and each of the bases listed in the table below:
+
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline Base & Conversion Factor for $\log_2$ \\ \hline \hline
+8 & \\
+  & \\ \hline
+10 & \\
+  & \\ \hline
+16 & \\
+  & \\ \hline
+23 & \\
+  & \\ \hline
+127 & \\
+  & \\ \hline
+256 & \\
+  & \\ \hline
+\end{tabular}
+\end{center}
+What do you notice about converting to $\log_2$ from some base $b=2^k$?
+
+\newpage \thispagestyle{empty}
+
+
+\item Using pointers introduces a different notion of sameness. The following problem descriptions clearly lay this out in a familiar search-like context.
+
+\begin{quote}
+1. Given a Vector of pointers to integers and a pointer to an integer, determine if any of the pointers in the vector point to the same integer value that the integer pointer points to. Put another way: Does anything in the vector point to something that has the same value that the given pointer's target has.  This is essentially linear search by with a layer of pointers over the (potential) values.
+\end{quote}
+
+\begin{quote}
+2. Given a Vector of pointers to integers and a pointer to an integer, determine if any of the pointers in the vector point to the same location that the integer pointer points to.  Put another way: Does anything in the vector point to the same location as the given pointer. This is essentially search for addresses of integers and not the integers themselves.
+\end{quote}
+
+\begin{enumerate}
+\item Restate these problems using the technical terms l-value, r-value, and dereference.  
+\vspace{2in}
+\item (To be done in Code::Blocks) Design and implement functions that solve these two problems. Call the function for solving (1) \textit{hasValue} and for (2) \textit{hasAlias}. Be certain to write documentation, declaration, stubs, and tests before implementing these functions. Tests will give you important practice with declaring and initializing pointers where the implementation works with previously initialized pointers. Submit the code as \textit{lab9} using handin.
+
+\end{enumerate}
+
+
+\end{enumerate}
+\end{document}
