@@ -2,14 +2,15 @@
 \usepackage{amsmath}
 \usepackage{setspace}
 \usepackage{hyperref}
+\usepackage{booktabs}
 
 \setlength{\textheight}{9in} \setlength{\topmargin}{-.5in}
 \setlength{\textwidth}{6.5in} \setlength{\oddsidemargin}{0in}
 \setlength{\evensidemargin}{0in}
 
-\title{Syllabus - COMP220 - Data-Structures}
+\title{Syllabus --- COMP220 --- Data-Structures}
 \author{ }
-\date{Fall 2015}
+\date{Fall 2016}
 
 \begin{document}
 \maketitle
@@ -17,13 +18,14 @@
 \section{Logistics}
 \begin{itemize}
 \item \textbf{Where: } Center for Science and Business, Room 323 (lecture), Center for Science and Business, Room 309 (Lab)
-\item \textbf{When: } MWF 8-8:50am (lecture), Th 2-4pm (lab)
-\item \textbf{Instructor :} James \textit{Logan} Mayfield
+\item \textbf{When: } MWF 8--8:50am (lecture), Th 2--4pm (lab)
+\item \textbf{Instructor: } James \textit{Logan} Mayfield
 \begin{itemize}
 \item \textit{Office: } Center for Science and Business, Room 344
-\item \textit{Phone: } 309-457-2200
+\item \textit{Phone: } 309-457-2200 % chktex 8
 \item \textit{Email: } lmayfield at MONMOUTHCOLLEGE dot EDU
-\item \textit{Office Hours: }   By Appointment. 
+\item \textit{Webpage: } \url{https://jlmayfield.github.io/}
+\item \textit{Office Hours: }   By Appointment.
 \end{itemize}
 \item \textbf{Webpage: } \url{https://jlmayfield.github.io/MC-COMP220}
 \item \textbf{Credits: } 1 Course Credit
@@ -32,19 +34,19 @@
 
 \section{Text}
 %insert text #1
+\noindent
+Roberts, Eric S\@. \textit{Programming Abstractions in C++}. Pearson/Prentice Hall. 2014. ISBN:0-13-345484-3. % chktex 8
 
-Roberts, Eric S.  \textit{Programming Abstractions in C++}. Pearson/Prentice Hall. 2014. ISBN: 0-13-345484-3
-
-%insert text #2 
+%insert text #2
 
 \section{Programming Environment}
 
-This course utilizes the Code::Blocks IDE and the GNU compiler for C++ development. 
+This course utilizes the Code::Blocks IDE and the GNU compiler for C++ development.
 \begin{itemize}
 \item \url{http://www.codeblocks.org/}
 \end{itemize}
 
-All programs written in this course are required to compile and run on an Ubuntu server 14.04.  All students will have access to the departmental server and thereby the above development tools.  While development is not required in this environment, \emph{failure to properly port a program to the required environment could result in your program not compiling correctly at the time of grading.}  All software for this course is available free of charge and can be found on the web if students wish to install it on their personal machines.  
+All programs written in this course are required to compile and run on a server running Ubuntu 16.04.1.  All students will have access to the departmental server and thereby the above development tools.  While development is not required in this environment, \emph{failure to properly port a program to the required environment could result in your program not compiling correctly at the time of grading.}  All software for this course is available free of charge and can be found on the web if students wish to install it on their personal machines.
 
 \section{Description and Content}
 
@@ -52,7 +54,7 @@ All programs written in this course are required to compile and run on an Ubuntu
 
 Data Structures continues the study of abstraction and programming through a focused study of data structures, algorithms, and abstract data types.  The primary focus of this course is the design and development of algorithms and programs using data abstraction and information hiding via Abstract Data Types \textit{(ADTs)}.  Data abstraction is absolutely fundamental to good programming practice and the management of large scale problems and data sets.  This course is designed to round out a student's understanding of basic computer science concepts while strengthening the program design and development skills through continued use of a test-driven design methodology.
 
-It is imperative that programmers and program designers be able to determine which of the many solutions available is the best for their specific task.  Throughout the course, students will focus on to making solid quantitative and qualitative judgments about program efficiency and overall program design choices.  Gone are the days when ``it works'' is a good assessment for the quality of a program.
+It is imperative that programmers and program designers be able to determine which of the many solutions available is the best for their specific task.  Throughout the course, students will focus on to making solid quantitative and qualitative judgments about program efficiency and overall program design choices.  Gone are the days when ``it works'' is a good enough assessment for the quality of a program.
 
 Students will explore the ideas and concepts brought up in class and homework assignments during the weekly lab session.  In addition to hands on exercises, lab sessions will be used to explore current, relevant research in computer science.
 
@@ -60,20 +62,20 @@ Students will explore the ideas and concepts brought up in class and homework as
 
 Topics covered in COMP220 focus on chapter 5 and beyond from the text. They include but are not limited to:
 \begin{itemize}
-\item Review of C++ Fundamentals
-\item Standard Container Types
-\item Classes and ADT Design
-\item Recursive Algorithm Design and Implementation
-\item Pointer and Array Logic
-\item Dynamic Memory Management
-\item Efficient Implementation of Container Types such as Vectors, Lists, Stacks, Queues, Trees, Maps, Sets, and Graphs.
+\item Review of C++ Fundamentals (Chapters 1--4, COMP161 Notes)
+\item Review of Algorithm Design, Analysis through Sorting Algorithms (Chapter 10 \& Notes)
+\item Standard Container Types (Chapter 5)
+\item Classes and ADT Design (Chapter 6)
+\item Pointer and Array Logic (Chapter 11)
+\item Dynamic Memory Management (Chapter 12)
+\item Efficient Implementation of Container Types such as Vectors, Lists, Stacks, Queues, Trees, Maps, Sets, and Graphs. (Chatpters 13--17)
 \end{itemize}
 
-   
+
 \section{Expectations and Policies}
 The expectations for students in this course are not at all unreasonable.  To avoid any confusion, they are listed here.  These aren't necessarily rules but rather guidelines for how you should conduct yourself in this class.  Strict rules will result from these expectations and will be covered later.
 \begin{itemize}
-\item Be respectful of others.  Don't create unnecessary distractions.  Turn cell phones off, on silent or leave them in the dorm.  Class time is not the time for checking email, surfing the web and IMing.  \textit{Come to class ready and interested in learning and if you're not, don't behave in such a way that prevents others from doing so.}
+\item Be respectful of others.  Don't create unnecessary distractions.  Keep cell phones out of the way and don't be on them in class if it's not for class purposes or leave them in the dorm.  Class time is not the time for checking email, surfing the web, getting on Facebook, catching Pokemon, or any of that stuff. \textit{Come to class ready and interested in learning and if you're not, don't behave in such a way that prevents others from doing so.}
 \item You're in college.  College is meant to provide an education.  Therefore, you are, for all intents and purposes, a \textit{professional student}.  Your work should reflect a solid level of professionalism and be neat and orderly.  Take the extra time to make it presentable.  Crumpled papers with various liquid stains on them are not presentable.  Think of the instructor as your boss and that the quality of your paycheck depends on the quality of the work.  \textit{You don't have to always love the work you do, but you should always do it to the best of your capabilities.}
 \item Attending class is not by itself sufficient for learning the material.  You're expected to read the sections of the text as they are covered in class.  You are encouraged to go beyond the material.  Make use of available resources such as tutors and the high availability of your instructor.  \textit{Don't expect to get an A just by showing up and doing the least amount of work that you can.}
 \end{itemize}
@@ -82,23 +84,23 @@ There are several strict policies that result from these expectations.  In the c
 \begin{itemize}
 \item \textit{Late Assignments: }In general, late assignments will \textit{not} be accepted.  If you feel you have a justified reason for the assignment being late you may set up an appointment to meet with the instructor and plead your case.  Situations beyond your control are understandable and exceptions can and will be made.
 \item \textit{Attendance: }You're an adult, you can choose to not come to class.  If you do miss/skip class \textit{you are still responsible for everything covered on that day}.  If you have no valid reason for missing class, do not expect the instructor to spend the time to re-present the class to you individually.
-\item \textit{Participation: }  Cellphone usage in class is not allowed, this includes text messages.  Turn off the ringers or leave them at home.  Computer usage is limited to activities in support of the course.  This does not include IMs, Facebook, checking email, general web surfing, poker, fantasy sports leagues, forum trolling, mine sweeper, etc.  This behavior is rude and can be a real distraction to others.  Repeated failure to abide by this policy will have a negative effect on your grade.  
+\item \textit{Participation: }  Cellphone usage in class is not allowed unless it's for class purposes. Turn off the ringers or leave them at home.  Computer usage is limited to activities in support of the course.  This does not include IMs, Facebook, checking email, general web surfing, poker, fantasy sports leagues, forum trolling, mine sweeper, etc.  This behavior is rude and can be a real distraction to others.  Repeated failure to abide by this policy will have a negative effect on your grade.
 \item \textit{Quality of Work:} There are several minimal requirements that your assignments must meet.
 \begin{itemize}
-\item \textit{Staples - } Assignments that take up more than one page must be stapled.  Unstapled assignments will either be returned to you to be stabled ASAP or points will be deducted.  
-\item \textit{Neatness - }  Make every attempt to make your work neat and orderly:  label problems, avoid excessive scratching out of mistakes (use pencil if you are prone to errors) and if you use spiral bound paper tear off the edges. 
-\item \textit{Show Work - } Rarely are answers alone sufficient for full credit.  Show your work whenever prudent.  If you're unsure if work is needed, \textit{ask!}
+\item \textit{Staples: } Assignments that take up more than one page must be stapled.  Unstapled assignments will either be returned to you to be stabled ASAP or points will be deducted.
+\item \textit{Neatness: }  Make every attempt to make your work neat and orderly:  label problems, avoid excessive scratching out of mistakes (use pencil if you are prone to errors) and if you use spiral bound paper tear off the edges.
+\item \textit{Show Work: } Rarely are answers alone sufficient for full credit.  Show your work whenever prudent.  If you're unsure if work is needed, \textit{ask!}
 \end{itemize}
 \end{itemize}
 
 \subsection{Collaboration}
 
-In general, you are encouraged to make use of the resources available to you.  This means it is OK to seek help from a friend, tutor, instructor, internet, etc.  However, \textit{copying of answers and any act worthy of the label of ``cheating'' is never permissible!}  It is understandable that when you work with a partner or a group that the resultant product is often extremely similar.  This is acceptable but be prepared to be asked to defend your collaborations to the instructor.  \textit{You should always be able to reproduce an answer on your own, and if you cannot you likely \textbf{do not really known the material.}} 
+In general, you are encouraged to make use of the resources available to you.  This means it is OK to seek help from a friend, tutor, instructor, internet, etc.  However, \textit{copying of answers and any act worthy of the label of ``cheating'' is never permissible!}  It is understandable that when you work with a partner or a group that the resultant product is often extremely similar.  This is acceptable but be prepared to be asked to defend your collaborations to the instructor.  \textit{You should always be able to reproduce an answer on your own, and if you cannot you likely \textbf{do not really known the material.}}
 \begin{itemize}
 \item When assignments are meant to be done in groups, you will be directed to turn in one set of solutions per group.
 \item All other assignments should represent your own work and effort.
 \end{itemize}
-All of the Monmouth College rules on academic dishonesty apply.  If you violate the rules be prepared to face the consequences of your actions. 
+All of the Monmouth College rules on academic dishonesty apply.  If you violate the rules be prepared to face the consequences of your actions.
 
 
 \newpage
@@ -109,19 +111,19 @@ This courses uses a standard grading scale.  Assignments and final grades will n
 \begin{center}
 \begin{small}
 \begin{tabular}{lcl}
-Score & & Grade \\ \hline
-94-100 & & A \\
-90-93 & & A- \\
-88-89 & & B+ \\
-82-87 & & B \\
-80-81 & & B- \\
-78-79 & & C+ \\
-72-77 & & C \\
-70-71 & & C- \\
-68-69 & & D+ \\
-62-67 & & D \\
-60-61 & & D- \\
-0-59 & & F 
+Score & & Grade \\ \toprule
+94--100 & & A \\
+90--93 & & A- \\
+88--89 & & B+ \\
+82--87 & & B \\
+80--81 & & B- \\
+78--79 & & C+ \\
+72--77 & & C \\
+70--71 & & C- \\
+68--69 & & D+ \\
+62--67 & & D \\
+60--61 & & D- \\
+0--59 & & F
 \end{tabular}
 \end{small}
 \end{center}
@@ -134,66 +136,70 @@ You are always welcome to challenge a grade that you feel is unfair or calculate
 
 The course workload is as follows:
 \begin{itemize}
-\item 10 Labs with 8-10 corresponding Homework assignments
+\item 10 Labs with 8--10 corresponding Homework assignments
 \item 5 Quizzes
 \item 2 Projects
 \item 1 Final Exam
 \item 1 Midterm Exam
 \end{itemize}
 
-Labs will often be followed by or proceeded by a homework assignment.  Typically this is either preparation for the lab or required completion of the lab. Students are also encouraged to look at the text's review questions as the solutions are available online.  The instructor will also identify key problems from each chapter that make for good practice/study problems. 
+Labs will often be followed by or proceeded by a homework assignment.  Typically this is either preparation for the lab or required completion of the lab. Students are also encouraged to look at the text's review questions as the solutions are available online.  The instructor will also identify key problems from each chapter that make for good practice/study problems.
 
 \subsubsection{Lab and Homework Grades}
 
-Lab and homework assignments are graded on a simple 3 point scale. Grades are marked with, in decreasing order, a check-plus, check, or check-minus. Your final grade for these two assignment categories is then based off the respective averages and determined by the following chart.  Notice this chart lists the minimum average needed to achieve a particular letter grade.  
+Lab and homework assignments are graded on a simple 3 point scale. Grades are marked with, in decreasing order, a check-plus, check, or check-minus. Your final grade for these two assignment categories is then based off the respective averages and determined by the following chart.  Notice this chart lists the minimum average needed to achieve a particular letter grade.
 
 \begin{center}
 \begin{small}
 \begin{tabular}{ll}
-Assignment Avg. (Min) & Letter Grade \\ \hline
+Assignment Avg. (Min) & Letter Grade \\ \toprule
 2.8   & A  \\
 2.75    & A- \\
 2.5 & B+ \\
-2.25    & B  \\ 
+2.25    & B  \\
 2   & B- \\
 1.75    & C+ \\
 1.5 & C  \\
 1   & C- \\
 0.75    & D  \\
-0.5  & F 
+0.5  & F
 \end{tabular}
 \end{small}
 \end{center}
 
 \subsection{Grade Weights}
 
-Your final grade is based on a weighted average of particular assignment categories.  You should be able to estimate your current grade based on your scores and these weights.  You may always visit the instructor \textit{outside of class time} to discuss your current standing.  
-\begin{itemize}
-\item Quizzes - 25\%
-\item Projects - 25\%
-\item Final - 10\%
-\item Midterm - 10\%
-\item Homework - 12.5\%
-\item Labs - 12.5\%
-\item Participation - 5\%
-\end{itemize}
+Your final grade is based on a weighted average of particular assignment categories.  You should be able to estimate your current grade based on your scores and these weights.  You may always visit the instructor \textit{outside of class time} to discuss your current standing.
+
+\begin{center}
+  \begin{tabular}{ll}
+  Category & Weight \\ \toprule
+    Quizzes & 25\% \\
+    Projects & 25\% \\
+    Final & 10\% \\
+    Midterm 10\% \\
+    Homework & 12.5\% \\
+    Labs & 12.5\% \\
+    Participation & 5\%
+  \end{tabular}
+\end{center}
+
 
 
 \subsection{Course Engagement Expectations}
 
-The weekly workload for this course will vary by student but on average should be about 13 hours per week.  The follow tables provides a rough estimate of the distribution of this time over different course components for a 15 week semester. 
+The weekly workload for this course will vary by student but on average should be about 13 hours per week.  The follow tables provides a rough estimate of the distribution of this time over different course components for a 15 week semester.
 \begin{center}
-\begin{tabular}{|l|l|l|}
-\hline
-Lectures+Labs+Final &      & 4.2 hours/week \\ 
+\begin{tabular}{lll}
+Assignment Type & Total Time & Time/week \\ \toprule
+Lectures+Labs+Final &      & 4.2 hours/week \\
 Homework & 45 hours        & 3 hours/week \\
-Exam Study Time & 8 hours  & 0.5 hours/week \\ 
+Exam Study Time & 8 hours  & 0.5 hours/week \\
 Quiz Study Time & 8 hours & 0.5 hours/week \\
 Projects & 45 hours        & 3 hours/week \\
 Reading+Unstructured Study & & 2 hours/week \\
-\hline
-& & 13.2 hours/week \\ 
-\hline
+\bottomrule
+& & 13.2 hours/week
 \end{tabular}
 \end{center}
 
@@ -202,44 +208,29 @@ Reading+Unstructured Study & & 2 hours/week \\
 The following calendar should give you a feel for how work is distributed throughout the semester.  Assignments and events are listed in the week they are due or when the occur. \textit{This calendar is subject to change based on the circumstances of the course.}
 
 \begin{center}
-\begin{tabular}{|c|c|r|}
-\hline 
+\begin{tabular}{ccr}
+\toprule
 Week & Dates & Assignments \\
-\hline
-1 & 8/25 - 8/28 &  Lab 1. \\
-\hline 
-2 & 8/31 - 9/4 &   Lab 2. \\
-\hline
-3 & 9/7 - 9/11 &   Quiz 1. Lab 3.\\
-\hline
-4 & 9/14 - 9/18 &  Lab 4. \\
-\hline
-5 & 9/21 - 9/25 &  Quiz 2. Lab 5.\\
-\hline
-6 & 9/28 - 10/2 & Lab 6.\\
-\hline
-7 & 10/5 - 10/9  &  Lab 7\\
-\hline 
-8 & 10/12 - 10/15 &  Midterm Exam. FALL BREAK (F) \\
-\hline
-9 & 10/21 - 10/23 & FALL BREAK (M,Tu)  Project 1 Lab.\\
-\hline
-10 & 10/26 - 10/30 &  Quiz 3. Project 1.\\
-\hline
-11 & 11/2 - 11/6 & Lab 8.\\
-\hline
-12 & 11/9 - 11/13 & Lab 9. Quiz 4.\\
-\hline
-13 & 11/16 - 11/20 & Project 2 Lab.\\ 
-\hline
-14 & 11/23 - 11/24 &  THANKSGIVING BREAK (W-F).   \\
-\hline
-15 & 11/30 - 12/4 & Project 2 Due. Quiz 5.\\ 
-\hline
-16 & 12/7 - 12/9 &   Reading Day (Th). \\
-\hline
-Final's Week & 12/12 (6:30-9:30pm) & Final Exam. \\ 
-\hline
+\toprule
+1 & 8/23--8/26 &  Lab 1.\\
+2 & 8/29--9/2 &   Lab 2. Quiz 1\\
+3 & 9/5--9/9 &   Lab 3. \\
+4 & 9/12--9/16 &  Lab 4. Quiz 2\\
+6 & 9/19--9/23 &  Lab 5.\\
+7 & 9/26--9/30  &  Lab 6. Quiz 3\\
+8 & 10/3--10/7 &  Lab 7.\\
+9 & 10/10--10/11 & Midterm Exam (M).  FALL BREAK (W-F). \\
+10 & 10/17--10/21 &  Project 1 Lab. \\
+11 & 10/24--10/28 & Project 1 Due. \\
+12 & 10/31--11/4 &  Lab 8. Quiz 4.\\
+13 & 11/7--11/11 & Lab 9. \\
+14 & 11/14--11/18 &  Project 2 Lab.\\
+15 & 11/21--11/22 &   Quiz 5. THANKSGIVING BREAK (W-F).  \\
+16 & 11/28--12/2 &  Project 2 Due. Lab 10. \\
+17 & 12/5--12/7 &  READING DAY (Th.) \\
+\midrule
+Final's Week & 12/12 (6:30pm-9:30pm) & Final Exam. \\
+\bottomrule
 \end{tabular}
 \end{center}
 
