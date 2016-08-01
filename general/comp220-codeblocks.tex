@@ -8,9 +8,9 @@
 \setlength{\textwidth}{6.5in} \setlength{\oddsidemargin}{0in}
 \setlength{\evensidemargin}{0in}
 
-\title{COMP220 - Code::Blocks Project Setup}
+\title{COMP220 --- Code::Blocks Project Setup}
 \author{ }
-\date{Fall 2015}
+\date{Fall 2016}
 
 \begin{document}
 \maketitle
@@ -19,10 +19,10 @@ Previously we used a suite of mostly GNU tools to develop build our programs.  N
 \begin{itemize}
 \item Link external libraries with our code
 \item Compile the gTest executable for our unit tests
-\item Compile a debugging version of our program that works with the integrated debugger. 
-\item Compile a release (ready for users) version of our program. 
+\item Compile a debugging version of our program that works with the integrated debugger.
+\item Compile a release (ready for users) version of our program.
 \end{itemize}
-The last two items on this list will happen by default when we create new projects in Code::Blocks. The first two require our intervention. This document walks you through the basic setup for projects in the course. 
+The last two items on this list will happen by default when we create new projects in Code::Blocks. The first two require our intervention. This document walks you through the basic setup for projects in the course.
 
 \section{Where are your documents?}
 
@@ -30,7 +30,7 @@ In C::B you organize programs into projects. Projects are grouped by workspaces.
 
 \section{Global Settings and C++11}
 
-Before you start creating projects and source documents, it's useful to know where your global compiler settings are and how to change them. These settings let you set some gcc compiler options that will be applied to every single build of every single project unless you say otherwise. In our case there is only one option we want to be applied globally and that's to compile with respect to the C++11 standard. 
+Before you start creating projects and source documents, it's useful to know where your global compiler settings are and how to change them. These settings let you set some gcc compiler options that will be applied to every single build of every single project unless you say otherwise. In our case there is only one option we want to be applied globally and that's to compile with respect to the C++11 standard.
 
 
 Go to the \textit{Settings} drop-down menu and select \textit{Compiler...} and you should now see this window modulo some selections:
@@ -45,7 +45,7 @@ Take a moment to browse some of the options. 	All we're concerned with is settin
 
 \section{Basic Project}
 
-Now we're going to setup a basic project for a dead simple hello world program. 
+Now we're going to setup a basic project for a dead simple hello world program.
 
 \subsection{Create a new Empty Project}
 
@@ -66,7 +66,7 @@ As is done in the picture, select the \textit{Empty Project} option and then pre
 \end{center}
 \vspace{.1in}
 
-So, if your window looks like the one above, press enter. 
+So, if your window looks like the one above, press enter.
 
 \subsection{Set Some Build Specific Compiler Options}
 
@@ -96,7 +96,7 @@ First go back to the \textit{New} options either from the File menu or the New F
 \end{center}
 \vspace{.1in}
 
-Once you select the file type, Empty in this case, you'll be able to choose the name and location as well as which builds should include the file. You are required to enter the full path to the file. This can be a bit of pain to type out but if you select the \textit{...} button next to the text field you should start the file browser in your project directory. You can then browse to the directory of your choosing and enter your desired file name. This is the time where you can create a \textit{src}folder if you have not done so already. If this document is a library document or contains your main procedure, then it's probably included in all the builds, like we see here. 
+Once you select the file type, Empty in this case, you'll be able to choose the name and location as well as which builds should include the file. You are required to enter the full path to the file. This can be a bit of pain to type out but if you select the \textit{...} button next to the text field you should start the file browser in your project directory. You can then browse to the directory of your choosing and enter your desired file name. This is the time where you can create a \textit{src}folder if you have not done so already. If this document is a library document or contains your main procedure, then it's probably included in all the builds, like we see here.
 
 \vspace{.1in}
 \begin{center}
@@ -104,7 +104,7 @@ Once you select the file type, Empty in this case, you'll be able to choose the 
 \end{center}
 \vspace{.1in}
 
-Once your file has been created it should pop up in the text editor. If not, you can select it from the project explorer. Go ahead and write up some kind of dead simple program, like this hello world you see here. 
+Once your file has been created it should pop up in the text editor. If not, you can select it from the project explorer. Go ahead and write up some kind of dead simple program, like this hello world you see here.
 
 \vspace{.1in}
 \begin{center}
@@ -130,12 +130,12 @@ You should see the follow items on the bar above the editor.
 
 The drop-down on the right lets you select the build, we'll work mostly in Debug as its setup for more, better warnings and debugging/profiling. The gear button will compile the code. The green play button runs the code. If no compiled version of the build exists, then hitting run prompts you to build or not. Finally the gear/play combo will build and then run. The blue arrows in a circle will force the rebuilding of all files in the project. Each of these buttons has a corresponding menu option in the \textit{Build} drop down. There's also a \textit{Clean} option in that menu that will clear out temp files just like we did with our makefiles.
 
-Compiler and errors and warnings will appear down below the text editor. The compiled program itself will be in the project folders corresponding to the build type. Your encouraged to introduce some errors to your hello world program, play around a bit and just explore C::B a bit before moving on to the more involved stuff to come.   
+Compiler and errors and warnings will appear down below the text editor. The compiled program itself will be in the project folders corresponding to the build type. Your encouraged to introduce some errors to your hello world program, play around a bit and just explore C::B a bit before moving on to the more involved stuff to come.
 
 \newpage
 \section{Adding a Testing Build for gTests}
 
-We develop code with Google's gTest unit test library. Tests are written in a file separate from the library they're testing and, when compiled, are linked to a pre-written main procedure provided by Google. To enact this in C::B we need to create a whole new Build type that includes the test code and links to the necessary libraries. 
+We develop code with Google's gTest unit test library. Tests are written in a file separate from the library they're testing and, when compiled, are linked to a pre-written main procedure provided by Google. To enact this in C::B we need to create a whole new Build type that includes the test code and links to the necessary libraries.
 
 First, let's add the Build to the project. Get to project \textit{Properties} either through the Project drop down or by right clicking the project name. Once there, select the \textit{Build Targets} tab and press the \textit{Add} button. I named my build \textit{gTests} but you can name in just \textit{Tests} or something similar if you wish.  What we're going to do is basic set the Build up like Debug and Release by filling in the options as follows:
 
@@ -165,7 +165,7 @@ Let's just say I have the file \textit{HelloTests.cpp} already in my project \te
 \end{center}
 \vspace{.1in}
 
-Alternatively, when we create new files, we got to choose to which builds they're added. So, if you're starting from a fresh, empty file for your tests and your test build is already setup, then you can choose to add them to the test build when you create the file. Just remember that tests builds generally include your tests and the libraries your testing but not any files containing another main. On the other hand, your Debug and Release builds should not build tests and should definitely build some main other than the Google testing main. 
+Alternatively, when we create new files, we got to choose to which builds they're added. So, if you're starting from a fresh, empty file for your tests and your test build is already setup, then you can choose to add them to the test build when you create the file. Just remember that tests builds generally include your tests and the libraries your testing but not any files containing another main. On the other hand, your Debug and Release builds should not build tests and should definitely build some main other than the Google testing main.
 
 
 \section{Conclusion}
