@@ -2,25 +2,200 @@
 \usepackage{amsmath}
 \usepackage{setspace}
 \usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{color}
 
 \setlength{\textheight}{9in} \setlength{\topmargin}{-.5in}
 \setlength{\textwidth}{6.5in} \setlength{\oddsidemargin}{0in}
 \setlength{\evensidemargin}{0in}
 
-\title{COMP220 - Lab 1 \& Homework 1}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{
+  %frame=tb,
+  language=C++,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+
+\title{COMP220 --- Lab 1 \& Homework 1}
 \author{ }
-\date{Fall 2015}
+\date{Fall 2016}
 
 \begin{document}
 \maketitle
+\thispagestyle{empty}
 
-The goal of this lab is to get back into C++ and to familiarize yourself with the use of the new IDE, Code::Blocks. To do this you should complete \textit{exercise 7 from chapter 2 of the text} with a few modifications:
+\begin{abstract}
+  For lab you'll review some basics of complexity and algorithm analysis as well as hone your skills with Logarithmic thinking. For homework you'll dust off your C++ skills and explore the new programming environment: \textit{Code::Blocks}.
+\end{abstract}
+
+\section{Lab 1}
+
 \begin{enumerate}
-\item Be sure to put your function in a library. 
-\item Write tests for your function using the gTest testing framework.
-\item Write a main program that provides a basic CLI interface to your function. If your program is called \textit{sqrt} then running \textit{sqrt 4} at the CLI should produce \textit{2}. You may assume valid command line arguments for this assignment;  Error checking and validation of command line arguments is not required but you are strongly encouraged to do it anyway. 
+  \item The formula for the conversion from one logarithm base to another tells us that for any two bases $a$ and $b$, $\log_a(n)$ differs from $\log_b(n)$ by exactly a factor of $\frac{1}{\log_b(a)}$.
+  \[
+  \log_b(n) = \dfrac{\log_a(n)}{\log_a(b)}
+  \]
+  Compute this factor for base $a=2$ and each of the bases listed in the table below:
+
+  \begin{center}
+  \begin{tabular}{lc}
+  \underline{Base} & \underline{Conversion Factor for $\log_2$} \\
+     &  \\
+     &  \\
+  8  & \underline{\hspace{1.5in}} \\
+     & \\
+     &  \\
+  10 & \underline{\hspace{1.5in}} \\
+     & \\
+     &  \\
+  16 & \underline{\hspace{1.5in}} \\
+     & \\
+     &  \\
+  23 & \underline{\hspace{1.5in}} \\
+     & \\
+     &  \\
+  127 & \underline{\hspace{1.5in}} \\
+   & \\
+   &  \\
+  256  & \underline{\hspace{1.5in}} \\
+  \end{tabular}
+  \end{center}
+  What do you notice about converting to $\log_2$ from some base $b=2^k$?
+
+\newpage \thispagestyle{empty}
+
+\item Fill in the following table in three phases. First without using a calculator, fill in the integer lower and upper bound. If the logarithm is an exact integer, then put that as both the lower and upper bound. Then, take a shot a guessing the logarithm's actual value out to 2 decimal places. Finally, use a calculator to compute the actual log to 2 places and fill that in for the final column. When computing actual logarithms, you may only use the log base 10 function on a calculator; use the conversion formula for all other bases.
+
+\begin{center}
+\begin{tabular}{lcccc}
+\underline{Logarithm} & \underline{Lower Int}. & \underline{Upper Int.} &
+  \underline{Guesstimate} & \underline{Actual Value} \\
+& & & & \\ & & & & \\
+$\log_2(17)$ & \underline{\hspace{1in}} & \underline{\hspace{1in}} & \underline{\hspace{1in}}  & \underline{\hspace{1in}} \\
+& & & & \\ & & & & \\
+$\log_2(725)$  & \underline{\hspace{1in}} & \underline{\hspace{1in}} & \underline{\hspace{1in}}  & \underline{\hspace{1in}} \\
+& & & & \\ & & & & \\
+$\log_2(1024)$ & \underline{\hspace{1in}} & \underline{\hspace{1in}} & \underline{\hspace{1in}}  & \underline{\hspace{1in}} \\
+ & & & & \\ & & & & \\
+$\log_2(7)$ & \underline{\hspace{1in}} & \underline{\hspace{1in}} & \underline{\hspace{1in}}  & \underline{\hspace{1in}} \\
+ & & & & \\ & & & & \\
+ $\log_8(7)$ & \underline{\hspace{1in}} & \underline{\hspace{1in}} & \underline{\hspace{1in}}  & \underline{\hspace{1in}} \\
+ & & & & \\ & & & & \\
+$\log_8(178)$ & \underline{\hspace{1in}} & \underline{\hspace{1in}} & \underline{\hspace{1in}}  & \underline{\hspace{1in}} \\
+ & & & & \\ & & & & \\
+$\log_{16}(25)$ & \underline{\hspace{1in}} & \underline{\hspace{1in}} & \underline{\hspace{1in}}  & \underline{\hspace{1in}} \\
+ & & & & \\ & & & & \\
+$\log_{16}(333)$ & \underline{\hspace{1in}} & \underline{\hspace{1in}} & \underline{\hspace{1in}}  & \underline{\hspace{1in}} \\
+ & & & & \\ & & & & \\
+$\log_{10}(15)$ & \underline{\hspace{1in}} & \underline{\hspace{1in}} & \underline{\hspace{1in}}  & \underline{\hspace{1in}} \\
+ & & & & \\ & & & & \\
+$\log_{10}(150)$ & \underline{\hspace{1in}} & \underline{\hspace{1in}} & \underline{\hspace{1in}}  & \underline{\hspace{1in}} \\
+ & & & & \\ & & & & \\
+$\log_{10}(145787)$ & \underline{\hspace{1in}} & \underline{\hspace{1in}} & \underline{\hspace{1in}}  & \underline{\hspace{1in}} \\
+ & & & & \\ & & & & \\
+\end{tabular}
+\end{center}
+
+\newpage \thispagestyle{empty}
+
+\item Rank the following complexity from least to greatest order, in terms of resources needs by members of the class, where $1$ is the least resource intense class and numbers proceed up from there.
+
+\begin{center}
+\begin{tabular}{ll}
+       & \\ & \\
+$O(n \log n)$ & \underline{\hspace{1.5in}} \\
+       & \\ & \\
+$O(n^2)$ & \underline{\hspace{1.5in}} \\
+       & \\ & \\
+$O(1)$ & \underline{\hspace{1.5in}} \\
+       & \\ & \\
+$O(2^n)$ & \underline{\hspace{1.5in}} \\
+       & \\ & \\
+$O(n^3)$ & \underline{\hspace{1.5in}} \\
+       & \\ & \\
+$O(\log n)$ & \underline{\hspace{1.5in}} \\
+       & \\ & \\
+$O(n)$ & \underline{\hspace{1.5in}}
+\end{tabular}
+\end{center}
+
+\item Determine the Big-O for each of the following functions.
+\begin{center}
+\begin{tabular}{lc}
+ & \\ & \\
+$\frac{7}{100}n+1.5E16$ & \underline{\hspace{1.5in}} \\
+& \\ & \\
+$\dfrac{x\log x}{25} - 13x + 5x^3$ & \underline{\hspace{1.5in}} \\
+& \\ & \\
+$\frac{(n+1)(n+2)}{n}$ & \underline{\hspace{1.5in}} \\
+& \\ & \\
+$10^9$ & \underline{\hspace{1.5in}} \\
+& \\ & \\
+$\log y + 135 + \dfrac{y}{2}$ & \underline{\hspace{1.5in}} \\
+\end{tabular}
+\end{center}
+
+\newpage \thispagestyle{empty}
+
+\item Consider the following loop template containing integer constants $a$ and $s$:
+\begin{center}
+\begin{lstlisting}
+for(int i{a} ; i < n ; i+=s){
+}
+\end{lstlisting}
+\end{center}
+\begin{enumerate}
+  \item What constraints must be placed on the values of $a$, $s$, and $n$ in order for this loop to terminate properly?
+  \vspace{2in}
+  \item Assuming the above constraints are met, exactly how many iterations will it perform before it terminates?
+  \vspace{2in}
+  \item What is the complexity of this loop and what effect, if any, do the values of $a$ and $s$ have on its complexity?
+  \newpage \thispagestyle{empty}
 \end{enumerate}
 
-When lab time is over, submit your \textit{source code only} via the \textit{handin} program. The course is, of course, \textit{comp220} and the assignment is \textit{lab1}. Your program does not need to be complete, but it should, as always, compile and run without crashing. For homework, complete the assignment. Submit your homework by class time on Monday 8/31 as assignment \textit{hwk1} via the handin script. 
+\item Consider the following loop template containing integer constants $a$ and $s$:
+\begin{center}
+\begin{lstlisting}
+for(int i{a} ; i > n ; i/=s){
+}
+\end{lstlisting}
+\end{center}
+\begin{enumerate}
+  \item What constraints must be placed on the values of $a$, $s$, and $n$ in order for this loop to terminate properly?
+  \vspace{2in}
+  \item Assuming the above constraints are met, exactly how many iterations will it perform before it terminates?
+  \vspace{2in}
+  \item What is the complexity of this loop and what effect, if any, do the values of $a$ and $s$ have on its complexity?
+  \newpage \thispagestyle{empty}
+\end{enumerate}
+
+\end{enumerate}
+\section{Homework 1}
+
+The goal of this homework is to get back into C++ and to familiarize yourself with the use of the new IDE, Code::Blocks. To do this you should complete \textit{exercise 7 from chapter 2 of the text} with a few modifications:
+\begin{enumerate}
+\item Be sure to put your function in a library.
+\item Write tests for your function using the gTest testing framework.
+\item Write a main program that provides a basic CLI interface to your function. If your program is called \textit{sqrt} then running \textit{sqrt 4} at the CLI should produce \textit{2}. You may assume valid command line arguments for this assignment;  Error checking and validation of command line arguments is not required but you are strongly encouraged to do it anyway.
+\end{enumerate}
+
+Submit your \textit{source code only} via the \textit{handin} program. The course is, of course, \textit{comp220} and the assignment is \textit{hwk1}. The homework is due prior to next week's lab, so \textbf{9/1 by 2pm}.
 
 \end{document}
