@@ -33,11 +33,11 @@ In C::B you organize programs into projects. Projects are grouped by workspaces.
 Before you start creating projects and source documents, it's useful to know where your global compiler settings are and how to change them. These settings let you set some gcc compiler options that will be applied to every single build of every single project unless you say otherwise. In our case there is only one option we want to be applied globally and that's to compile with respect to the C++11 standard.
 
 
-Go to the \textit{Settings} drop-down menu and select \textit{Compiler...} and you should now see this window modulo some selections:
+Go to the \textit{Settings} drop-down menu and select \textit{Compiler\ldots} and you should now see this window modulo some selections:
 
 \vspace{.1in}
 \begin{center}
-\includegraphics[scale=.5]{CB_GlobalCompiler.png}
+\includegraphics[scale=.35]{CB_GlobalCompiler.png}
 \end{center}
 \vspace{.1in}
 
@@ -49,7 +49,7 @@ Now we're going to setup a basic project for a dead simple hello world program.
 
 \subsection{Create a new Empty Project}
 
-First we make a new project by either going to \textit{File $>$ New $>$ Project...} or by using the \textit{New File} button under the drop down menu.  In either case, we're greeted with the following:
+First we make a new project by either going to \textit{File $>$ New $>$ Project\ldots} or by using the \textit{New File} button under the drop down menu.  In either case, we're greeted with the following:
 
 \vspace{.1in}
 \begin{center}
@@ -70,17 +70,17 @@ So, if your window looks like the one above, press enter.
 
 \subsection{Set Some Build Specific Compiler Options}
 
-Before we move on, we're going to make sure our Debug and Release builds have the options enabled that we want. To change build options you can right click on the project name in the workspace explorer and select \textit{Build Options...}. You should make sure to select the options shown in the following two images. Be sure to notice which build is selected and the category filters.
+Before we move on, we're going to make sure our Debug and Release builds have the options enabled that we want. To change build options you can right click on the project name in the workspace explorer and select \textit{Build Options\ldots}. You should make sure to select the options shown in the following two images. Be sure to notice which build is selected and the category filters.
 
 \vspace{.1in}
 \begin{center}
-\includegraphics[scale=.5]{CB_BasicDebugOpts.png}
+\includegraphics[scale=.35]{CB_BasicDebugOpts.png}
 \end{center}
 \vspace{.1in}
 
 \vspace{.1in}
 \begin{center}
-\includegraphics[scale=.5]{CB_BasicReleaseOpts.png}
+\includegraphics[scale=.35]{CB_BasicReleaseOpts.png}
 \end{center}
 \vspace{.1in}
 
@@ -96,7 +96,7 @@ First go back to the \textit{New} options either from the File menu or the New F
 \end{center}
 \vspace{.1in}
 
-Once you select the file type, Empty in this case, you'll be able to choose the name and location as well as which builds should include the file. You are required to enter the full path to the file. This can be a bit of pain to type out but if you select the \textit{...} button next to the text field you should start the file browser in your project directory. You can then browse to the directory of your choosing and enter your desired file name. This is the time where you can create a \textit{src}folder if you have not done so already. If this document is a library document or contains your main procedure, then it's probably included in all the builds, like we see here.
+Once you select the file type, Empty in this case, you'll be able to choose the name and location as well as which builds should include the file. You are required to enter the full path to the file. This can be a bit of pain to type out but if you select the \textit{\ldots} button next to the text field you should start the file browser in your project directory. You can then browse to the directory of your choosing and enter your desired file name. This is the time where you can create a \textit{src}folder if you have not done so already. If this document is a library document or contains your main procedure, then it's probably included in all the builds, like we see here.
 
 \vspace{.1in}
 \begin{center}
