@@ -28,100 +28,28 @@
   tabsize=3
 }
 
-\title{COMP 220 \\ Lecture Notes 02 \\ Structural Recursion and Iteration}
+
+\title{COMP 220 \\ Lecture Notes 02 \\ Analyzing Simple Recursion}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-  Like most data structures texts, chapter 10 of our book introduces you to several sorting\sidenote{Selection Sort, Mergesort, and Quicksort} algorithms and discusses the complexity of each algorithm. The goal of these notes is to look not at the algorithm by the underlying design principle that leads to the algorithm. We'll then use the resultant algorithms to examine general limitations on the complexity of that design principle.
+In COMP161 we mostly looked closely at the analysis of loops. Here we look at simple recursive functions and their analysis.
 \end{abstract}
 
-\section{Structural Design}
+\section{Repetition is as Repetition Does}
 
-Our first design principle yields linear search, and insertion sort. It can be carried out either iteratively or recursively. The core idea is:
+The essential analysis task of analyzing a recursive function is the same as analyzing a loop because they both induce the same kind of property in out computations: repetition. Recursive functions do so by repeatedly calling themselves where loops manage it via the implicit repetition of C++ loop control structures. What this means is we must still look for three things:
+\begin{enumerate}
+  \item The amount of work carried out independently of the repetition.
+  \item The amount of work carried out per repetition
+  \item The frequency of repetition.
+\end{enumerate}
 
-\begin{quote}
-  The structure of the logic of your algorithm mirrors the structure of your data.
-\end{quote}
+\section{Recursive Linear Search}
 
-Structural design first begins with identifying the underlying structure of your data and then using that to bootstrap the algorithm. You first encountered this with list processing functions in Racket. Lists have a basic recursive structure. They come in two cases: empty or not. The non-empty list is composed of a singular datum, the first, and a sub-list, the rest. Because the list is inherently recursive, structural design dictates that our list algorithms should also be recursive. In a C++ context, we'd have the following procedure template:
-
-\begin{figure}
-  \begin{lstlisting}[mathescape=true]
-    $\ldots$ functionName(recursiveType alst, $\ldots$ ){
-      if( isEmpty(alst) ){
-         $\ldots$
-      }
-      else{
-        $\ldots$ first(alst) $\ldots$
-        $\ldots$ functionName(alst, $\ldots$) $\ldots$
-      }
-    }
-  \end{lstlisting}
-\label{structRec}
-\caption{The basic template for a structurally recursive procedure}
-\end{figure}
-
-Notice the requirements for applying the template given in figure~\ref{structRec} are that the type of \textit{alst} provides a means of distinguishing the empty case from the non-empty case, a means of selecting the first element, and a means of selecting the rest. All of these operations occur in $O(1)$ time and are therefore not an impediment to designing efficient algorithms based on this pattern.
-
-When we encountered vectors in C++ we discovered a data structure based on easily random access via numerical indexes. The trade-off for random access in vectors is that recursive decomposition is either not supported or inefficient\sidenote{$O(1)$ in this case}. Rather than work with structure recursively, we used an iterative traversal of the index range.  By counting through the indexes we can access each element of the vector in turn. This gives way to the state-driven ``traverse and accumulate'' pattern that typifies iterative algorithms.
-
-\begin{figure}
-  \begin{lstlisting}[mathescape=true]
-    $\ldots$ functionName(recursiveType avec, $\ldots$ ){
-
-      $\ldots$ accumulator{$\ldots$};
-      for(int i{0} ; i < size(avec) ; ++i ){
-        accumulator = $\ldots$ accumulator $\ldots$ avec[i] $\ldots$
-      }
-      $\ldots$ accumulator $\ldots$
-    }
-  \end{lstlisting}
-\label{structIter}
-\caption{The basic template for a structurally iterative procedure}
-\end{figure}
-
-\subsection{Variations on a Theme}
-
-At this point you should be familiar with the patterns hinted at in figure~\ref{structRec} and~\ref{structIter}. The key moving forward is to recognize that structural design is not only these two patterns but whole class of patterns typified by these two.
-
-Recursion doesn't require an empty base case, just at least one base case. Your base case can be a singleton element or any fixed, finite number of elements. You can have more than one base case. What's important is that you have \textit{at least one case in which your structure and your algorithm does not reference itself}. The recursive, non-empty case doesn't need to be the first and the rest. It can be the last and all but the last. It can be the first two and everything after that\sidenote{notice this pairs well with a size 2 base case!}. What's important is that deconstruction by parts is efficient\sidenote{$O(1)$ ideally} and that \textit{recursively applying the deconstruction will eventually converge to the base case}.
-
-Iteration doesn't have to occur on a left to right basis. You can count through the indexes from last to first, odds then evens, or some other counting pattern. The important thing is that \textit{your traversal pattern visits all the relevant elements of the structure}.  Accumulation isn't always explicit. It's sometimes possible to implicitly accumulate and avoid updates to the accumulator that do not change its state.
-
-Often we can induce recursive or iterative structure where it is not the default. We can treat the index range of a vector as a recursive structure and recursive over an index counter. Similarly, it's possible to iterate on a list by keeping a state variable that tracks the current location. When tweaking new structures out of our data we simply need to ensure that the operations which enable the structural recursion and iteration are efficient.
-
-Ultimately, what makes a strategy a structural one is that you are attempting to map the logic of your algorithm on to a basic structure within the data. The strength of this approach is that it is value agnostic. You don't concern yourself with the values within the data structure, you just concern yourself with how data is organized within the structure itself.
-
-\section{Structural Search and Sort}
-
-Linear search is what you get if you apply structural design to the problem of search. Insertion Sort is what you get when you apply the design priciple to the problem of sorting. These algorithms were covered and analyzed in Lecture Notes 16 from COMP161\sidenote{\url{https://jlmayfield.github.io/MC-COMP161/}} so we'll review them  briefly here and reiterate how structural design gives rise to these algorithms.
-
-\subsection{Search}
-
-Iterative search traverses the vector indexes and accumulates the current index of the search key using $-1$ as a indicator for ``not found''. When searching for the first occurrence of a key or the mere presence of a key we can forgo the explicit accumulation and return the index of the key within the loop when it's found or $-1$ if the loop terminates because no occurrence of the key was found. Thus, this formulation of the algorithm constitutes an optimization of the basic structural version.
-
-\begin{figure}[htpb!]
-\begin{lstlisting}
-int search(const std::vector<int>& data,int fst, int lst, int key){
-
-    for(unsigned int i{0}; i < data.size() ; ++i){
-    	if( data[i] == key ){
-			return i;
-		  }
-    }
-
-    return -1;
-}
-\end{lstlisting}
-\label{code:searchiter}
-\caption{Search: Iterative Implementation}
-\end{figure}
-
-A vitally important way of thinking about structural recursion is to imagine the process at some time step $t$ given that there are more than $t$ elements in the vector. This divides the vector into three regions. Elements from $0$ to $t-1$ are those we've searched through already.  The element at $t$ is the element we are currently working with. Finally, the elements from $t+1$ to the end are those which we have yet to traverse. The item you're looking for is either not in the vector or it's in one of these three regions. If it is the first region, those we've previously traversed, then we should have found it already\sidenote{so either we've returned that index or we've accumulated it's value}.  If it's in the region we have yet to traverse, the third region, then assume you'll find it later on.  These assertions are what as known as \textbf{loop invariants} and can act as the \textbf{inductive hypothesis} in a proof of the correctness of the loop and algorithm generally. As you get deeper into discrete mathematics you'll learn \sidenote{proof by induction}. If you want to prove a structurally oriented algorithm correct, then odds are you'll use mathematical induction. The keystone logic is relative to the element at $t$. We, the programmer must come up with the logic that determine if the element at $t$ is the key. If we can do that and we can properly traverse all of the vector, then our algorithm will work.
-
-To search the vector recursively we need to leverage the recursive structure of the index range and use a helper procedure that tracks the index of the first and last\sidenote{technically we don't need the track the last, but doing so opens up alternate patterns of recursion}. The helper is technically a more general implementation of search that allows searching the region of the vector indexed by $[fst,lst)$. %chktex 9
+In lecture notes 16 from COMP161\sidenote{\url{https://jlmayfield.github.io/MC-COMP161/Lecture_Notes/comp161-lectureNotes-16.pdf}} we looked at linear search implemented recursively. This implementation is shown again in figure~\ref{code:searchrec} and utilizes the two function pattern that is typical with our design methodology for developing recursive functions for C++ vectors. The second function utilizes index parameters \textit{fst} and \textit{lst} in order to manage the recursive decomposition of the vector's index range.
 
 \begin{figure}[htpb!]
 \begin{lstlisting}
@@ -145,78 +73,105 @@ int search(const std::vector<int>& data,int fst, int lst, int key){
 \caption{Search: Recursive Implementation}
 \end{figure}
 
-Once again, the underlying logic is that of induction. We assert that if the key is in the rest  of the vector, i.e. $[fst+1,lst)$, and we recursively search the rest of the vector, then that recursive call to search returns the index of the key. We then focus on the logic of examining the first element. The logic shown in figure~\ref{code:searchrec} optimizes on this by recognizing that if you need the first occurrence, then it's better to check the first and return if it's the key prior to making the recursive call. %chktex 9
+To start our analysis we start at the top with the search which takes the vector and key and searches the entire vector. This procedure carries out $O(1)$ operations to get the vector size and then makes a recursive call. This means that the complexity is $O(1) + O(f)$ where $O(f)$ is the complexity of the recursive helper. At this point we're pretty much done with this procedure.  It's complexity is exactly the complexity of the helper\sidenote{Do you see why?}, i.e. $O(f)$. The trick is not not get hung up on the unknown function $f$ just yet. Take a moment to come to a decisive conclusion about the analysis of the top level function that is independent of the details of the analysis of it's helper.
 
-\subsection{Sort}
+Now that we're more or less done thinking about the top level function, we can continue wit the helper. The worst case clearly occurs with the condition for the \textit{if} and \textit{else if} is false and we drop down to the recursive call in the \textit{else}.  When this happens then the procedure will perform exactly $4$ operations prior to making the recursive call\sidenote{$>=$, $\lbrack \rbrack$, $==$, and $+$}.
 
-Structural sorting starts in the same fashion as searching. The problem we face is that the operation we need to repeat, i.e.\ what we do to the first when recursing or what we do to the $i^{th}$ when iterating, is complex enough as to merit it's own separate design consideration. With search, what you do to the single element is simple enough that we can just do it. With sort, it's not initial obvious and falls clearly into the camp of, ``design a helper''. In both cases the logic of the helper is that of insert.
+We now need to think about how recursion is carried out. The function gets called over and over until the base case is reached in which no recursive call is made. If $n$ recursive calls are made, then $n-1$ of those make a recursive call and $1$ is the terminating base case. Combine this with our previous analysis, we known that $4$ operations are done when the procedure makes a recursive call, but what about the final recursive call, the base case call?
 
-In the case of the iterative insertion sort we assume that at step $t$, the elements at $0$ to $t-1$ are sorted and we must incorporate the $t^{th}$ element such that all $t+1$ elements up to and including at $t$ are sorted after the $t^{th}$ iteration. This is an inherently structural argument because we're thinking in terms of the index range and vector structure and not about the values in the vector per se.
+The code clearly indicates that two situations can terminate the recursion. The first is covered by the \textit{if} and occurs when the the index range specified by \textit{fst} and \textit{lst} is empty. This case requires a single operations. The next situation is when for a non-empty index range, the key is found at \textit{fst}. This case requires three operations. Given that our concern is overall worst case complexity, we need to recognize that the terminating case that maximizes work is the first one because terminating there means we've searched an entire index range and not a part of a range.
 
-Insert itself can be solved structurally. The implementation shown in figure~\ref{code:isortiter} traverses down from last to first and swaps adjacent elements as it goes. It's optimized by stopping before the first when it's determined that no swap is needed\sidenote{this means it's all sorted}. 
+We now known that one operation, the work of the terminating base case, is carried out outside the repetition and that four operations are carried out every time a recursive call is made. We're left the question of how many recursive calls are made? To determine this we can dig into the code logic. Every recursive call advances the value of \textit{fst} by one. Recursion terminates when \textit{fst}$>=$\textit{lst}. In short, we're dealing with counting logic just like our loops.
 
-\begin{figure}
-\begin{lstlisting}
-void iter::sort(std::vector<int>& data){
+\begin{equation}
+  \begin{array}{rcl}
+  fst + k &>&= lst \\
+  k &>& lst - fst
+  \end{array}
+\end{equation}
 
-    for(unsigned int i{1}; i < data.size(); i++){
-      iter::insert(data,0,i);
-    }
-    return;
-}
+Now recall that $lst-fst+1$ is the number of integers in the range of $fst$ to $lst$ if we exclude last. So a simpler way of state what we found is that \textit{the recursion repeats once for each of the elements in the index range}.  When searching an entire vector, this is exactly the size of the vector. We can now find the exact work done by this function and it's complexity. For a vector of size $n$ we'll do $4n+1$ operations with a complexity of $O(n)$.
 
-void iter::insert(std::vector<int>& data,
-		   unsigned int fst, unsigned int lst){
+\section{Recurrence Relations}
 
-    for(unsigned int i{lst-1}; i >= fst && i < data.size(); i--){
-      if( data[i+1] < data[i] ){
-		    std::swap(data[i],data[i+1]);
-      }
-      else{
-		    return;
-      }
-    }
-    return;
-}
-\label{code:isortiter}
-\caption{Sort \& Insert: Iterative Implementations}
-\end{lstlisting}
-\end{figure}
+Our analysis of liner search mostly relied on feeling our way through the code and recognizing a pattern familiar from iteration. There is a way of analyzing the complexity of a recursive function that is more general from the perspective that it relies less on recognizing the kind of counting that typifies iteration.
 
+Before we determined the frequency of repetition we recognized two crucial cases to the worst case complexity for our function.
+\begin{enumerate}
+  \item The empty range base case that carries out a single operation
+  \item The recursive case that carries out four operations plus the cost of recursively searching the remainder of the vector.
+\end{enumerate}
 
-\begin{figure}
-\begin{lstlisting}
-void recur::sort(std::vector<int>& data){
-   recur::sort(data,0,data.size());
-   return;
-}
+We can express this knowledge of the complexity of search as a recursive function. Let $n$ be the size of the index range\sidenote{$n=$\textit{fst}-\textit{lst}} and $\mathcal{T}$ be the function that maps $n$ to the number of operations needed for the worst case search. Then equation~\ref{eq:searchRecRel} expresses $\mathcal{T}$ recursively!
+\begin{equation}
+  \begin{array}{rcl}
+    \mathcal{T}(0) &=& 1 \\
+    \mathcal{T}(n) &=& \mathcal{T}(n-1) + 4
+  \end{array}
+\label{eq:searchRecRel}
+%\caption{Recurrence Relation for Linear Search}
+\end{equation}
 
-void recur::sort(std::vector<int>& data,int fst, int lst){
-   if( fst >= lst-1 ){
-      return;
-    }
+Equations like those shown in equation~\ref{eq:searchRecRel} are called \textsc{Recurrence Relations} and are incredibly useful in the analysis of algorithms. The problem is that they are \textit{open form solutions} to our problem. They do not provide us with an exact, calculable solution. What we really want is a \textit{closed form} solution where $\mathcal{T}$ is not on the right hand side of the equation. To do this we must solve the recurrence.
 
-    recur::sort(data,fst+1,lst);
-    recur::insert(data,fst,lst-1);
-    return;
-}
+\subsection{Solving Simple Recurrences via Unrolling}
 
-void recur::insert(std::vector<int>& data,
-		     unsigned int fst, unsigned int lst){
-    if( fst >= lst ){
-      return;
-    }
+The recurrence relation shown in equation~\ref{eq:searchRecRel} is about as simple as they come. The easiest way to solve it is usually to just unroll the recursion and determine the underlying pattern.  As has become the norm, you're goal is to establish an equation for $\mathcal{T}(n)$ after $k$ levels of unrolling or recursion depth $k$. The initial equation gives us depth $1$ and we take it from there.
+\begin{equation*}
+  \begin{array}{rcl}
+    \mathcal{T}(n) &=& \mathcal{T}(n-1) + 4 \\
+    &=& (\mathcal{T}(n-2) + 4) + 4 = \mathcal{T}(n-2) + 2*4 \\
+    &=& (\mathcal{T}(n-3) + 4) + 2*4 = \mathcal{T}(n-3) + 3*4 \\
+    & & \ldots \\
+    &=& (\mathcal{T}(n-k) + 4) + 4(k-1) = \mathcal{T}(n-k) + 4k \\
+  \end{array}
+\end{equation*}
 
-    if( data[fst] > data[fst+1] ){
-      std::swap(data[fst],data[fst+1]);
-      recur::insert(data,fst+1,lst);
-    }
+To finish the process and solve the recurrence we must determine when the recurrence terminates, the max depth of the recursion. The base case occurs when $n=0$ so the recurrence terminates when $n-k=0$ or, solving for $k$, with a recursive depth of $k=n$. When this happens, then we substitute the base case for the known value of  $\mathcal{T}(0)$ on the right and find the closed form solution found in equation~\ref{eq:searchclosed}.
 
-}
-\end{lstlisting}
-\label{code:isortrec}
-\caption{Sort \& Insert: Recursive Implementations}
-\end{figure}
+\begin{equation}
+\mathcal{T}(n) = 4n+1
+\label{eq:searchclosed}
+\end{equation}
 
+To be certain that we're correct we can do a quick proof by induction or at the very least check the core logic of the proof.  When $n$ is zero our closed form gives us $\mathcal{T}(0) = 1$. The base case holds. Now we assume everything works great for the first $n-1$ steps and verify that this implies the above equation.
+\begin{equation*}
+  \begin{array}{rcl}
+    \mathcal{T}(n) &=& \mathcal{T}(n-1) + 4 \\
+    &=& (4(n-1) + 1)  + 4 \\
+    &=& 4n - 4 + 1 + 4 \\
+    &=& 4n + 1
+  \end{array}
+\end{equation*}
+Thus, by the principle of mathematical induction our closed form solution matches the open form recurrence relation.
 
-\end{document} %chktex 17
+\section{Simple Recurrences}
+
+In lab we noticed that basic step counting loops will keep us firmly in the ballpark of linear time algorithms or worse. The same pattern holds true for these kind of simple recurrences. What if the base case has a fixed cost of $a$, each recursive call has a fixed cost of $w$, and each step steps towards the base case by some fixed amount $s$. Then we'd be dealing with a recurrence that fits the template shown in equation~\ref{eq:simpRecRel}.
+
+\begin{equation}
+  \begin{array}{rcl}
+    \mathcal{T}(0) &=& a \\
+    \mathcal{T}(n) &=& \mathcal{T}(n-s) + w
+  \end{array}
+\label{eq:simpRecRel}
+\end{equation}
+
+\begin{equation}
+  \begin{array}{rcl}
+    \mathcal{T}(n) &=& \mathcal{T}(n-s) + w \\
+    &=& \mathcal{T}(n-2s) + 2w \\
+    &=& \mathcal{T}(n-3s) + 3w \\
+    && \ldots \\
+    &=& \mathcal{T}(n-ks) + kw
+  \end{array}
+\label{eq:simpRecRel}
+\end{equation}
+
+We now solve for $k$ when $n-ks=0$ to get $k = \lceil \frac{n}{s} \rceil$ for a closed form of:
+\begin{equation}
+    \mathcal{T}(n) = \frac{nw}{s} + a
+\end{equation}
+For fixed base case cost $a$, step size $s$, and work per recursion $w$, this is linear time, $O(n)$.
+
+\end{document}
