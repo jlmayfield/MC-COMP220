@@ -35,7 +35,7 @@
 \maketitle
 
 \begin{abstract}
-In COMP161 we mostly looked closely at the analysis of loops. Here we look at simple recursive functions and their analysis.
+In COMP161 we mostly looked closely at the analysis of loops. Here we look at simple recursive functions and their analysis.  If you want a refresher and/or some more perspective on the basics of recursion, then you should review chapter 7 of the text.
 \end{abstract}
 
 \section{Repetition is as Repetition Does}
@@ -46,6 +46,8 @@ The essential analysis task of analyzing a recursive function is the same as ana
   \item The amount of work carried out per repetition
   \item The frequency of repetition.
 \end{enumerate}
+
+The only difference between analyzing a recursive procedure and loop-based iterative procedure is where we go looking for these things.
 
 \section{Recursive Linear Search}
 
@@ -170,8 +172,52 @@ In lab we noticed that basic step counting loops will keep us firmly in the ball
 
 We now solve for $k$ when $n-ks=0$ to get $k = \lceil \frac{n}{s} \rceil$ for a closed form of:
 \begin{equation}
-    \mathcal{T}(n) = \frac{nw}{s} + a
+    \mathcal{T}(n) = \lceil \frac{nw}{s} \rceil + a
 \end{equation}
 For fixed base case cost $a$, step size $s$, and work per recursion $w$, this is linear time, $O(n)$.
+
+\section{A Different Recurrence}
+
+Let's look at another recurrence relation without any particular code attached to it. In equation~\ref{eq:simpRecRel2} you see a recurrence that is similar to that of linear search but where the argument to the recursive call to $\mathcal{T}$ is $\frac{n}{2}$ instead of $n-1$.
+\begin{equation}
+  \begin{array}{rcl}
+    \mathcal{T}(0) &=& 1 \\
+    \mathcal{T}(n) &=& \mathcal{T}(\frac{n}{2}) + 4
+  \end{array}
+\label{eq:simpRecRel2}
+\end{equation}
+If you've been paying attention to the material thus far, then you can guess what the analysis of this recurrence is going to yield. Let's proceed by unrolling and see what we see.
+
+\begin{equation*}
+  \begin{array}{rcl}
+    \mathcal{T}(n) &=& \mathcal{T}(\frac{n}{2}) + 4 \\
+    &=& (\mathcal{T}(\frac{n}{4}) + 4 ) + 4 = \mathcal{T}(\frac{n}{2^2}) +  4*2 \\
+    &=& (\mathcal{T}(\frac{n}{8}) + 4 ) + 2*4 = \mathcal{T}(\frac{n}{2^3}) +  4*3 \\
+    &=& \ldots \\
+    &=& (\mathcal{T}(\frac{n}{2*2^{k-1}} ) + 4) + 4(k-1) = \mathcal{T}(\frac{n}{2^k}) + 4k \\
+  \end{array}
+\end{equation*}
+After $k$ steps of recursion we see $\mathcal{T}(\frac{n}{2^k}) + 4k$ operations. The base case is reached when $\lfloor \frac{n}{2^k} \rfloor = 0$. A nicer way of saying this is in terms the second to last step where $\lfloor \frac{n}{2^{k-1}} \rfloor = 1$.
+\begin{equation}
+  \begin{array}{rcl}
+    \lfloor \frac{n}{2^{k-1}} \rfloor &=& 1  \\
+    n &=& 2^{k-1} \\
+    \log_2{n} &=& k-1 \\
+    k &=& \lfloor (\log_2{n}) \rfloor + 1  = \lceil \log_2{(n)} \rceil \\
+  \end{array}
+\end{equation}
+
+Thus the recurrence terminates at a depth of $\rceil \log_2{n} \lceil$ yielding  logarithmic complexity.
+
+\begin{equation}
+  \begin{array}{rcl}
+    \mathcal{T}(n) &=& 4\lceil \log_2{n} \rceil + 1 \\
+    &=& 4\lceil \log_2{(n)} \rceil + 1 = O(\log n)
+  \end{array}
+\end{equation}
+
+\section{Analysis to Code}
+
+Understanding the analysis of algorithms can really help you advance as a program because when you understand the efficiency limits of certain structures like basic counting loops and recursive procedures, then you immediately understand the impact of certain design strategies on efficiency.  You also give yourself targets in the design process. If you are shooting for something logarithmic, then you know you can't just make little steps through a vector. You must find a way to take increasingly larger steps, to cut the problem size by a constant factor not a constant increment. Absent any other plan of attack, this kind of knowledge helps to give you a place to start. 
 
 \end{document}
