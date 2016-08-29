@@ -7,7 +7,7 @@
 \setlength{\textwidth}{6.5in} \setlength{\oddsidemargin}{0in}
 \setlength{\evensidemargin}{0in}
 
-\title{COMP220 - Lab 2 \& Homework 2}
+\title{COMP220 --- Lab 2 \& Homework 2}
 \author{ }
 \date{Fall 2015}
 
@@ -15,23 +15,29 @@
 \maketitle
 
 \begin{abstract}
-This lab is essentially more review. This time you'll need to do a standard function as well as an I/O function. Chapter 4, section 4 of the text provides a good overview of the streaming I/O class hierarchy. The chapter also discusses formatted output in section 1. Lecture notes 9 from COMP161 discuss the application of our design process to I/O procedures.  This includes how to use gTest and string streams to write unit tests for I/O based procedures. 
+  For your second lab and homework assignment you'll be practicing the analysis of recursion and the translation from simple recursion to iteration and back.
 \end{abstract}
 
 \section{Lab 2}
 
-Your task is a slightly modified version of exercise 2 from chapter 4 of the text. For lab you should:
-\begin{itemize}
-\item Document, declare, stub, and write tests for the \textit{windChill} function as described in chapter 2 exercise 4.
+In section 7.4 of your text two versions of a procedure to detect palindromes are given to you. The first suffers from some common inefficient pitfalls which the second avoids.  You are two do the following:
+\begin{enumerate}
+  \item Translate the more efficient of the two versions to an iterative, loop-based procedure.
+  \item Produce recurrence relations for both versions. Solve those recurrence relations using the unrolling technique. Sketch out the basis for an inductive proof of the correctness of your solution. This work can either be done by hand and submitted directly to the instructor or you may type it up and submit it along with the remainder of the lab.
 
-\item Document, declare, stub, and write a test for a procedure to print wind chill tables like the one discussed in chapter 4 exercise 2 with the following modification. Your procedure should take as arguments a max wind speed, wind speed step size, min temperature, and temperature step size. Tables will then display wind chills for wind speeds from \textit{step-size} up to \textit{max} in step-size increments and for temperatures from $40$ down to $min$, also in step size increments. The example table in the text would have a wind speed step size of $5$ with a max speed of $60$ and a temperature step size of $5$ with a min temperature of $-45$. Your table does not need the graphics and can essentially be just the data will row and column headers (i.e. just the numbers). If you want to attempt getting text in there like he example, then by all means go for it. 
-
-\item Write a simple main procedure which calls your table printing procedure. (Note that this should compile and run but will only do what your stubs indicate it should do).
-\end{itemize}
-Your functions can both be in a single library and namespace. Once these tasks are done, or lab time is up, submit your source code as \textit{lab2} using the handin script. 
+\end{enumerate}
 
 \section{Homework 2}
 
-For homework you should complete the implementation of both functions and debug as necessary. Submit the source code for the completed program as \textit{hwk2} using handin. This assignment is due by \textbf{8am on Monday 9/7}.
+\begin{center}
+  \textbf{Submit source code as assignment hwk2 via handin prior to the next lab.}
+\end{center}
+
+Section 7.5 of your text provides a recursive implementation of Binary Search. Your job is to:
+\begin{enumerate}
+  \item Translate this to an iterative, loop-based procedure. Be sure to properly document, declare, and test this code. Iterative versions of this algorithm are surely found all over the internet, try to do this on your own.
+  \item Write out the recurrence relation for this code. Place it in a comment block with your iterative code.
+  \item Solve for the closed form of the recurrence using the unrolling technique. (Optional) Use a proof by induction to verify your closed form solution.
+\end{enumerate}
 
 \end{document}
