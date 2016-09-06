@@ -7,9 +7,9 @@
 \setlength{\textwidth}{6.5in} \setlength{\oddsidemargin}{0in}
 \setlength{\evensidemargin}{0in}
 
-\title{COMP220 - Homework 3 \& Lab 3}
+\title{COMP220 --- Homework 3 \& Lab 3}
 \author{ }
-\date{Fall 2015}
+\date{Fall 2016}
 
 \begin{document}
 \maketitle
@@ -21,23 +21,21 @@
 \section{Homework 3}
 
 \begin{center}
-\textbf{\textit{Due at the start of lab on 9/10}}
+\textbf{\textit{Due at the start of lab on 9/8}}
 \end{center}
 
-For homework you must setup a project to work with both Google Tests and the StanfordCPP Library. Setting up the Stanford library is described here \url{https://jlmayfield.github.io/MC-COMP220/general/comp220-cbAndscppl.pdf}. To test your setup incorporate the files found in \textit{c220-hwk3.zip}, which you'll find in the course home directory (/home/comp220/fa15). The file \textit{HelloWorld.cpp} is a basic main program that utilizes the \textit{random.h} library from the StanfordCPP library. It should be compiled by your Debug and Release builds.  The file \textit{HelloTests.cpp} contains a set of Google Tests that utilize the StanfordCPP \textit{vector.h} and \textit{random.h} library. If your project is setup correctly in C::B, then you should be able compile and run the Debug/Release executable and the Test executable produced by this code. 
-
-\textit{I will come around at the start of lab to check that you have a project setup that can compile and run these two programs.}
+For homework you need to get your Code::Blocks project setup, stub the procedures described below, and write tests for the procedures as well.  In short, get all the design prep work done ahead of time so that you can focus on the programming in lab. \textit{I will come around at the start of lab to check that you have a project setup and that you can compile and run the tests.}
 
 \section{Lab 3}
 
-Start by adapting your already setup project for the standard lab project setup (1 library, a main, and tests).  You should create all new files and delete the files used to test your setup. I recommend you keep the Google Test file around as a guide for your library tests as it illustrates a testing technique that's helpful with containers like the one you'll be using in lab.
+This lab is an extension of exercise 11 in chapter 7 of the text.  You need to write a suite of functions for converting integers to strings and vice versa.  The function \textit{intToStr} would take the integer 137 and produce the string ``137''. Conversely, the function \textit{strToInt} would take ``-256'' and produce the integer $-256$. You should develop a recursive and iterative implementation of each function. Use C++ namespaces to distinguish the implementations rather than changing the names of the functions as given above.
 
-For lab you're to work on some vector problems from the book. Vectors should be familiar to you from COMP161 so we'll just dive right in and adapt to the StanfordCPP vector. Choose one of the following to work on (even better, just do them all). 
-\begin{enumerate}
-\item \textit{Chapter 5, Exercise 1} This is great practice at designing Input procedures, which isn't something we've reviewed yet. 
-\item \textit{Chapter 5, Exercises 2-3} Some pretty standard functions. These should let you practice basic iterative problem solving and the \textit{fold} pattern.
-\item \textit{Chapter 5, Exercise 4} Design this one as an Output procedure. This would be good practice for tomorrows quiz.
-\end{enumerate}
-We'll likely discuss some alternative design considerations in class. For now, just go at the problems as they're laid out in the book. When lab is done and your code is in a compilable state, submit your source code as \textit{lab3} using the handin script.
+
+Exercise 7 briefly discusses the recursive decomposition of integers in terms of the least significant digit and all other digits. Mathematically, for positive integers we can express this as follows:
+\begin{equation}
+  x = 10 \left\lfloor \frac{x}{10} \right\rfloor + (x \pmod{10})
+\end{equation}
+
+At the end of lab, submit your source code via handin as assignment lab3.
 
 \end{document}
