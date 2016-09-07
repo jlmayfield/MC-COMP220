@@ -28,13 +28,13 @@
   tabsize=3
 }
 
-\title{COMP 220 \\ Lecture Notes 02 \\ Structural Recursion and Iteration}
+\title{COMP 220 \\ Lecture Notes 02 \\ Reviewing Structural Recursion and Iteration}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-  Like most data structures texts, chapter 10 of our book introduces you to several sorting\sidenote{Selection Sort, Mergesort, and Quicksort} algorithms and discusses the complexity of each algorithm. The goal of these notes is to look not at the algorithm by the underlying design principle that leads to the algorithm. We'll then use the resultant algorithms to examine general limitations on the complexity of that design principle.
+  The basic design recipes we focused on in COMP160 and COMP161 utilized a structural pattern. In these notes we quickly review that pattern to see how it gives rise to algorithms like linear search and insertion sort.
 \end{abstract}
 
 \section{Structural Design}
@@ -45,7 +45,11 @@ Our first design principle yields linear search, and insertion sort. It can be c
   The structure of the logic of your algorithm mirrors the structure of your data.
 \end{quote}
 
-Structural design first begins with identifying the underlying structure of your data and then using that to bootstrap the algorithm. You first encountered this with list processing functions in Racket. Lists have a basic recursive structure. They come in two cases: empty or not. The non-empty list is composed of a singular datum, the first, and a sub-list, the rest. Because the list is inherently recursive, structural design dictates that our list algorithms should also be recursive. In a C++ context, we'd have the following procedure template:
+Structural design first begins with identifying the underlying structure of your data and then using that to bootstrap the algorithm.
+
+\subsection{Recursion}
+
+You first encountered structural design with list processing functions in Racket. Lists have a basic recursive structure. They come in two cases: empty or not. The non-empty list is composed of a singular datum, the first, and a sub-list, the rest. Because the list is inherently recursive, structural design dictates that our list algorithms should also be recursive. In a C++ context, we'd have the following procedure template:
 
 \begin{figure}
   \begin{lstlisting}[mathescape=true]
@@ -63,9 +67,13 @@ Structural design first begins with identifying the underlying structure of your
 \caption{The basic template for a structurally recursive procedure}
 \end{figure}
 
-Notice the requirements for applying the template given in figure~\ref{structRec} are that the type of \textit{alst} provides a means of distinguishing the empty case from the non-empty case, a means of selecting the first element, and a means of selecting the rest. All of these operations occur in $O(1)$ time and are therefore not an impediment to designing efficient algorithms based on this pattern.
+Notice the requirements for applying the template given in figure~\ref{structRec} are that the type of \textit{alst} provides a means of distinguishing the empty case from the non-empty case, a means of selecting the first element, and a means of selecting the rest. All of these operations \textit{should} occur in $O(1)$ time such that they are not an impediment to designing efficient algorithms based on this pattern.
 
-When we encountered vectors in C++ we discovered a data structure based on easily random access via numerical indexes. The trade-off for random access in vectors is that recursive decomposition is either not supported or inefficient\sidenote{$O(1)$ in this case}. Rather than work with structure recursively, we used an iterative traversal of the index range.  By counting through the indexes we can access each element of the vector in turn. This gives way to the state-driven ``traverse and accumulate'' pattern that typifies iterative algorithms.
+The structures we've encountered in C++ so far don't typically support $O(1)$ selection of anything but a single element. To get around this limitation we've developed patterns for recursing over a range of index values.
+
+\subsection{Iteration}
+
+When we encountered vectors in C++ we discovered a data structure with efficient random access via numerical indexes. The trade-off for random access in vectors is that recursive decomposition of the vector structure directly is either not supported or inefficient\sidenote{$O(1)$ in this case}. The same is true with C++ strings. Rather than work with structure recursively, we used an iterative traversal of the index range.  By this we mean that we start at one end of the vector and visit each item along the way to the other end of the vector. If we were counting up the index range and we're visiting the $i^{th}$ item, then we must have already visited the items in the range of $0$ to $i-1$ and will continue on to visit the items in the range of $i+1$ to $size-1$. This gives way to the state-driven ``traverse and accumulate'' pattern that typifies iterative algorithms and is shown in figure~\ref{structIter}.
 
 \begin{figure}
   \begin{lstlisting}[mathescape=true]
@@ -82,6 +90,8 @@ When we encountered vectors in C++ we discovered a data structure based on easil
 \caption{The basic template for a structurally iterative procedure}
 \end{figure}
 
+There is rarely discussion of the iterative structure of some data set or data structure. Data structures absolutely exhibit recursive structure and this has been well studied and well utilized in computing.  Iteration is, by definition, the repetition of a process where recursion is repetition exhibited by both process and definition.  For that reason it's fair to say that structures cannot be iterative. However, we can use the same inductive reasoning that underlies recursion to decompose a structure for effective iteration. The structural element comes from dealing with the data as it sits in the structure. Elements previously accumulated were the elements originally found prior to the current element in our vector/structure.
+
 \subsection{Variations on a Theme}
 
 At this point you should be familiar with the patterns hinted at in figure~\ref{structRec} and~\ref{structIter}. The key moving forward is to recognize that structural design is not only these two patterns but whole class of patterns typified by these two.
@@ -96,7 +106,7 @@ Ultimately, what makes a strategy a structural one is that you are attempting to
 
 \section{Structural Search and Sort}
 
-Linear search is what you get if you apply structural design to the problem of search. Insertion Sort is what you get when you apply the design priciple to the problem of sorting. These algorithms were covered and analyzed in Lecture Notes 16 from COMP161\sidenote{\url{https://jlmayfield.github.io/MC-COMP161/}} so we'll review them  briefly here and reiterate how structural design gives rise to these algorithms.
+Linear search is what you get if you apply structural design to the problem of search. Insertion Sort is what you get when you apply the design principle to the problem of sorting. These algorithms were covered and analyzed in Lecture Notes 16 from COMP161\sidenote{\url{https://jlmayfield.github.io/MC-COMP161/}} so we'll review them  briefly here and reiterate how structural design gives rise to these algorithms.
 
 \subsection{Search}
 
@@ -153,7 +163,7 @@ Structural sorting starts in the same fashion as searching. The problem we face 
 
 In the case of the iterative insertion sort we assume that at step $t$, the elements at $0$ to $t-1$ are sorted and we must incorporate the $t^{th}$ element such that all $t+1$ elements up to and including at $t$ are sorted after the $t^{th}$ iteration. This is an inherently structural argument because we're thinking in terms of the index range and vector structure and not about the values in the vector per se.
 
-Insert itself can be solved structurally. The implementation shown in figure~\ref{code:isortiter} traverses down from last to first and swaps adjacent elements as it goes. It's optimized by stopping before the first when it's determined that no swap is needed\sidenote{this means it's all sorted}. 
+Insert itself can be solved structurally. The implementation shown in figure~\ref{code:isortiter} traverses down from last to first and swaps adjacent elements as it goes. It's optimized by stopping before the first when it's determined that no swap is needed\sidenote{this means it's all sorted}.
 
 \begin{figure}
 \begin{lstlisting}
@@ -183,6 +193,8 @@ void iter::insert(std::vector<int>& data,
 \end{lstlisting}
 \end{figure}
 
+
+Using structural design to recursive sort a vector also leads to insertion sort.  The core helper procedure \textit{insert} could be done iteratively, making the top level sort logic recursive and the internal insertion logic iterative.  In figure~\ref{code:isortrec} you see it done recursively for the sake of consistency and continued practice with structural recursion.
 
 \begin{figure}
 \begin{lstlisting}
@@ -217,6 +229,8 @@ void recur::insert(std::vector<int>& data,
 \label{code:isortrec}
 \caption{Sort \& Insert: Recursive Implementations}
 \end{figure}
+
+\section{Inductive Reasoning}
 
 
 \end{document} %chktex 17
