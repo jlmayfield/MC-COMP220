@@ -2,34 +2,232 @@
 \usepackage{amsmath}
 \usepackage{setspace}
 \usepackage{hyperref}
+\usepackage{listings,color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{
+  frame=tb,
+  language=C++,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=left,
+  stepnumber=1,
+  firstnumber=1,
+  numbersep=5pt,
+  numberfirstline=true,
+  numberstyle=\tiny\color{black},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
 
 \setlength{\textheight}{9in} \setlength{\topmargin}{-.5in}
 \setlength{\textwidth}{6.5in} \setlength{\oddsidemargin}{0in}
 \setlength{\evensidemargin}{0in}
 
-\title{COMP220 - Lab 4 \& Homework 4}
+\title{COMP220 \\ Lab 4 \& Homework 3}
 \author{ }
-\date{Fall 2015}
+\date{Fall 2016}
 
 \begin{document}
 \maketitle
-
+\thispagestyle{empty}
 \begin{abstract}
-For this lab/hwk pair you'll extend the equality library discussed in class for the StanfordCPP library Stack and Queue classes.  The interfaces for these classes is listed on pages 212 and 218, respectively. The initial equality library, with Vector implementations, can be found in the course home directory; the file \textit{scpplibequals.zip} contains the the library (header and implementation) and Google Tests. 
+For this lab you'll trace and illustrate the action of the key sorting and searching algorithms that we've been studying in class. Code for these algorithms can be found on the server in the course home directory. You should follow the code line for line and be certain that you understand how it implements the high level logic discussed in class. Your goal for the lab period is to make it through the helpers. We'll continue working on the sheet in class Friday. The sheet should be completed by class time Monday as a homework assignment.
 \end{abstract}
 
-\section{The Assignment}
+\section*{On Tracing Code}
 
-For \textit{lab4} get started on implementing \textit{operator==} for the StanfordCPP Stack and Queue.   You should work our process: document, declare, stub, write gtests, then, and only then, implement. Implementation will be a bit trickier than it was for vectors because stacks and queues are not random access. You have to deconstruct the container in order to get at all the contents. You'll have to decide what this means for the signature (do you pass by value, reference, or constant reference?). At the end of the lab period, submit your work as assignment \textit{lab4}. If you did not finish the two operators, then complete them by \textbf{Monday 9/21} and submit your source code as assignment \textit{hwk4}. The lab grade is about the \textit{quality and quantity of your progress}. The homework grade is about the quality and correctness of the final product. 
+The key to stepping through code is tracking and tracing the \textsc{state} of the program. This means keeping tabs on the current argument values for recursive functions, the current value of local variables, and the current value/state of variables being mutated. The ultimate goal is to keep tabs on variable that are mutating and as needed the variables that dictate that mutation. If a loop is mutating a vector, then we track the vector mutation and the value of any loop counters that drive that mutation. At a micro level, you track state from one program statement to the next statement. At a more macro level you track it across core, repeated code blocks.  When using iterative loops, this means one iteration to the next. For recursive procedures you track the state and function arguments for each recursive call. In doing this we get a clear picture of how the data changes across the whole of the procedure's execution and, when done right, you get a clear visual history of the process in terms of repeated work.
+
+An excellent way of recording state change is as a table where the process progresses from row $1$ down the table and each column corresponds to a piece of state that you're tracking. This gives you a visual record of each major step in the program's execution. You can check yourself by seeing if the number of rows makes sense with what you know about the amount of repetition carried out by the code.
+
+For complex procedures that utilize non-trivial helper procedures, it's helpful to first trace and understand the helpers outside of the context of their repeated usage. You can then treat them as black boxes for the procedure they help. The ultimate goal is to separate the trace of the helper from the trace of the procedure calling the helper. For example, if we know what insert will do, then when tracing insertion sort, we can skip the work done inside insert and worry only about the bigger picture of the sort itself. This means tracking the $O(n)$ calls to insert while not tracking the $O(n)$ steps within the insert itself.
+
+\newpage \thispagestyle{empty}
 
 
-\section{Notes on Template Libraries}
+Here we see a trace of recursive insertion sort. In this trace we list both calls
+to sort and insert to ensure that we see how the two work together in this context.
+For sort we're listing the state of the vector at the time of calling, for insert we list
+the state of the vector after insert is complete to help illustrate the nature of the non-tail position recursion used by the algorithm.
 
-Writing and working with template libraries is a bit different. For non-template libraries we would include the header in source code and compile the implementation for linking with other compiled objects. Templates cannot be compiled until you've used them in code, until a programmer has specified the exact values of the template parameters. This causes a key problem for our library design methodology. We can't compile the template implementation file so how do we provide complete definitions to the compile without linking?  The answer is a bit unsatisfactory.  Write your header and implementation files like you usually do, but \textit{include the implementation file at the end of the header file}.  This breaks the ``don't \#include cpp files'' rule. This is the one exception. By doing this we can \#include the header file wherever we need the template and also bring along the complete definitions.  When we compile the code that uses our template library header, the compiler will use the template as needed and compile the code that results. You can see all of this at work in the \textit{scpplibequals} library starter you've been given for this lab/hwk: the cpp is included at the end of the header, the header is included in the Google Tests, the Google tests utilize the template code which is compiled as needed when the Google tests are compiled.
+\begin{figure}[!htbp]
 
-\subsection{Using your Template Library in other Projects}
+\begin{lstlisting}
+  std::vector<int> v{3,1,6,7,2,9,0};
+  structural::recur::insert(v);
+\end{lstlisting}
 
-To use the template library you must direct your compiler towards the header file.  One way to do this is to copy the header into the program's working directory. This way is bad practice. We'll use this equality library a lot and don't want to keep copying it. The better fix is what you did for the StanfordCPP library.  Add the directory containing the header and cpp file to the search path for the compiler. 
+\begin{tabular}{cccc}
+\underline{data} & \underline{fst} & \underline{lst} & \underline{procedure}\\
+ \{3,1,6,7,2,9,0\} & 0 & 7 & sort \\
+ \{3,1,6,7,2,9,0\} & 1 & 7 & sort \\
+ \{3,1,6,7,2,9,0\} & 2 & 7 & sort \\
+ \{3,1,6,7,2,9,0\} & 3 & 7 & sort \\
+ \{3,1,6,7,2,9,0\} & 4 & 7 & sort \\
+ \{3,1,6,7,2,9,0\} & 5 & 7 & sort \\
+ \{3,1,6,7,2,9,0\} & 6 & 7 & sort \\
+ \{3,1,6,7,2,0,9\} & 5 & 7 & insert \\
+ \{3,1,6,7,0,2,9\} & 4 & 7 & insert \\
+ \{3,1,6,0,2,7,9\} & 3 & 7 & insert \\
+ \{3,1,0,2,6,7,9\} & 2 & 7 & insert \\
+ \{3,0,1,2,6,7,9\} & 1 & 7 & insert \\
+ \{0,1,2,3,6,7,9\} & 0 & 7 & insert
+\end{tabular}
+\caption{Tracing Insertion Sort by tracking state}
+\end{figure}
+
+\newpage \thispagestyle{empty}
+
+\subsection*{The Helpers}
+
+We begin by stepping through the major helper procedures utilized across the search and sort algorithms.
+\begin{enumerate}
+\item Iterative Insert \newline
+Trace the action of the following calls to insert. Track the state of the vector after each iteration and the value of $i$ used on the corresponding iteration. Next to each vector state write the value of $i$ corresponding to that iteration.
+\begin{lstlisting}
+  std::vector<int> v{1,3,5,2,4};
+  structural::iter::insert(v,0,3);
+
+  std::vector<int> v{7,2,5,6,1};
+  structural::iter::insert(v,1,v.size()-1);
+\end{lstlisting}
+Finally, identify the base case (smallest possible vector input) of this procedure and comment on how this case is handled by this implementation.
+
+\newpage \thispagestyle{empty}
+\hspace{1in}
+\newpage \thispagestyle{empty}
+
+\item Recursive Insert \newline
+Trace the action of the following calls to insert. This procedure is tail recursive, all the work performed locally by a given call to insert is done prior to making the next recursive call. This allows us to effectively ignore the return to the caller from the callee as it has no effect on how the procedure behaves. For each example clearly show the state of the vector prior to making a recursive call, i.e.\ after all the localized work is done, and track the values of the procedure arguments \textit{fst} and \textit{lst} from one recursive call to the next.
+
+\begin{lstlisting}
+  std::vector<int> v{5,1,3,4,9};
+  structural::recur::insert(v,0,v.size()-1);
+
+  std::vector<int> v{7,4,3,5,9};
+  structural::recur::insert(v,1,3);
+\end{lstlisting}
+Finally, identify the base case (smallest possible vector input) of this procedure and comment on how this case is handled by this implementation.
+
+\newpage \thispagestyle{empty}
+\hspace{1in}
+\newpage \thispagestyle{empty}
+
+\item Partition \newline
+For the following calls to partition, trace the state of the vector and the value of \textit{rfst} at the completion of the iteration as well as the the value of i used on that iteration. Then, give the value assigned to \textit{pIdx} at the end of the procedure as well as the final state of the vector.
+\begin{lstlisting}
+  std::vector<int> v{5,6,1,2,9};
+  int idx{-1};
+  generativeDandC::partition(v,0,v.size(),idx);
+
+  std::vector<int> v{4,2,6,3,7};
+  int idx{-1};
+  generativeDandC::partition(v,0,v.size(),idx);
+\end{lstlisting}
+Once you've traced the above instances of partition, identify the base case for partition and comment on how this implementation handles this case. Finally, if you were given the initial vector and asked to produce the final state after partitioning, how could you place the values in the lower and upper regions without actually tracing the algorithm? Put another way, how can use use this as a black box, data in data out, and still accurately represent the action of this particular implementation?
+
+\newpage \thispagestyle{empty}
+\hspace{1in}
+\newpage \thispagestyle{empty}
+
+\item Iterative Merge \newline
+We'll only trace the action of the iterative implementation of merge. It's recommended that you do the recursive version on your own. Here we want to trace the state of the vector into which the data is being merged. This work is carried out across three loops but these loops are all dependent on the same set of local variables and be treated as a single iterative process. You should therefore track the state of the merge vector \texit{temp} after the iteration completes as well as the value of \textit{lcurr}, \textit{rcurr}, and \textit{tcurr} used during the iteration itself. Clearly indicate on your trace where the procedure has moved from one loop to the next.
+\begin{lstlisting}
+std::vector<int> v{1,5,8,2,3,9};
+structuralDandC::iter::merge(v,0,3,v.size());
+
+std::vector<int> v{1,2,5,8,2,4,9,10};
+structuralDandC::iter::merge(v,2,4,6);
+\end{lstlisting}
+Finally, merge has several base cases. Identify them and comment on how the procedure handles them.
+
+\newpage \thispagestyle{empty}
+\hspace{1in}
+\newpage \thispagestyle{empty}
+
+\end{enumerate}
+
+\subsection*{Divide and Conquer Searching}
+
+We now move to tracing simple divide and conquer algorithms. We'll only look at the recursive implementations of these algorithms.
+
+\begin{enumerate}
+\item Recursive Binary Search \newline
+Binary search is a pure function. No state is mutated by the procedure. All we need to trace here is the value of the parameters \textit{first} and \textit{last} for the recursive procedure and the locally computed \textit{mid} for each recursive call. Your examples are given in terms of the top level function call. You can start your trace with the first call to the recursive helper.
+\begin{lstlisting}
+std::vector<int> v{1,3,5,7,9,11,13};
+structuralDandC::recur::binsearch(v,8);
+
+structuralDandC::recur::binsearch(v,-4);
+
+structuralDandC::recur::binsearch(v,5);
+
+structuralDandC::recur::binsearch(v,13);
+\end{lstlisting}
+Once again, identify the base case and comment on how it is handled by the procedure.
+
+\newpage \thispagestyle{empty}
+\hspace{1in}
+\newpage \thispagestyle{empty}
+
+\item Recursive kth smallest \newline
+Tracing the kth smallest algorithm is complicated by the fact that it is a randomized algorithm. To get around this we simply choose ``random'' pivots ahead of time or as we go. For this exercise you'll be given a set of tables of randomly generated, uniformly distributed integers where each table ranges from $0$ to some upper bound $n$ for all $n$ from 1 to 19.   If you need a random number from $[a,b-1]$, then you simply find the table for $[0,b-a-1]$, pick the next number on that table, and add $a$ to it. For example, if you need a random number between $5$ and $13$ including both of those bounds, then you first go to the table for $[0,8]$, then pick a number, and add $5$ to it.  Be sure to convince yourself that you understand why this process works. Pull numbers from the tables in order and don't reuse a number.  This ensures that we all see the exact same process unfold.
+
+To trace the kth smallest algorithm you should show the state of the vector being partitioned after every call to partition along with the current values for $k$, \textit{first}, \textit{last}, and the local variable \textit{pidx}. Once again, this is a tail recursive procedure so you should track all the local state as it sits just prior to making a recursive call. The examples begin at the top level, you can start your trace with the first call to the recursive helper function.
+\begin{lstlisting}
+std::vector<int> v{3,4,9,2,1,8,10};
+
+generativeDandC::recur::kthsmallest(v,2);
+generativeDandC::recur::kthsmallest(v,v.size()/2);
+generativeDandC::recur::kthsmallest(v,v.size()-2);
+\end{lstlisting}
+\end{enumerate}
+
+\newpage \thispagestyle{empty}
+\hspace{1in}
+\newpage \thispagestyle{empty}
+
+\section{Mergesort \& Quicksort}
+
+\begin{enumerate}
+\item Recursive Mergesort \newline
+While tracing mergesort you should treat calls to \textit{merge} as blackboxes. We will not trace them explicitly and simply concern ourselves with their effect relative to the current context. The real trick in tracing mergesort is following the recursion. The algorithm is not tail recursive so the trace must account for what happens when a recursive call returns. Just like with the insertion sort example, your trace should clearly layout the order in which calls to mergesort are actually carried out by the computer. For each call to mergesort track the value of \textit{first} and \textit{last} only. Interleave with your trace of mergesort the calls to the helper procedure merge. For merge track the values of \textit{first} and \textit{last} and the state of the vector after merge returns. Write one procedure call per line and clearly label the line as mergesort or merge. The end result should tell you the exact order in which things are merged and how the recursive calls to mergesort enable this.
+\begin{lstlisting}
+
+std::vector<int> v{5,2,6,3,1,0,4,8,7};
+structural::recur::mergesort(v);
+
+\end{lstlisting}
+
+
+\newpage \thispagestyle{empty}
+\hspace{1in}
+\newpage \thispagestyle{empty}
+
+
+\item Quicksort % after every partition
+Quicksort is a bit easier to trace because it's tail recursive. It still has the difficulty of properly unrolling the sequencing of the two recursive calls and accounting for the randomized pivot selection. We'll use the same technique for accounting for the randomness that we used for the kth smallest algorithm. Restart your random integer selection from the start of your tables. Don't pick up where kthsmallest left off. Once again, we'll interleave calls to quicksort and partition. For partition you should track the values of \textit{first} and \textit{last} and record the final state of the vector and \textit{pIdx}. For quicksort just track \textit{first} and \textit{last}.
+
+\begin{lstlisting}
+
+std::vector<int> v{5,2,6,3,1,0,4,8,7};
+structural::recur::quicksort(v);
+
+\end{lstlisting}
+
+\end{enumerate}
 
 
 \end{document}
