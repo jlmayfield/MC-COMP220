@@ -66,7 +66,7 @@ the state of the vector after insert is complete to help illustrate the nature o
 
 \begin{lstlisting}
   std::vector<int> v{3,1,6,7,2,9,0};
-  structural::recur::insert(v);
+  structural::recur::sort(v);
 \end{lstlisting}
 
 \begin{tabular}{cccc}
@@ -130,11 +130,11 @@ For the following calls to partition, trace the state of the vector and the valu
 \begin{lstlisting}
   std::vector<int> v{5,6,1,2,9};
   int idx{-1};
-  generativeDandC::partition(v,0,v.size(),idx);
+  generative::partition(v,0,v.size(),idx);
 
   std::vector<int> v{4,2,6,3,7};
   int idx{-1};
-  generativeDandC::partition(v,0,v.size(),idx);
+  generative::partition(v,0,v.size(),idx);
 \end{lstlisting}
 Once you've traced the above instances of partition, identify the base case for partition and comment on how this implementation handles this case. Finally, if you were given the initial vector and asked to produce the final state after partitioning, how could you place the values in the lower and upper regions without actually tracing the algorithm? Put another way, how can use use this as a black box, data in data out, and still accurately represent the action of this particular implementation?
 
