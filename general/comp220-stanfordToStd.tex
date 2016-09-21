@@ -1,0 +1,143 @@
+\documentclass[nobib]{tufte-handout}
+\usepackage{amsmath}
+%\usepackage{setspace}
+\usepackage{hyperref}
+\usepackage{booktabs}
+
+%\setlength{\textheight}{9in} \setlength{\topmargin}{-.5in}
+%\setlength{\textwidth}{6.5in} \setlength{\oddsidemargin}{0in}
+%\setlength{\evensidemargin}{0in}
+
+\title{Standford Library to Standard Library Cheat sheet \\ COMP220 Data Structures}
+\author{}
+\date{Fall 2016}
+
+\begin{document}
+\maketitle
+
+\thispagestyle{empty}
+
+\begin{abstract}
+  This document list standard library equivalents to the collections classes in the Stanford C++ library used in the text book.  Handling of special cases and errors may differ between the Stanford and Standard equivalents presented here. You should verify the specifications with the appropriate resource.
+\end{abstract}
+
+\subsection*{Vector}
+
+The C++ std::vector class\sidenote{\url{http://www.cplusplus.com/reference/vector/vector/}} can be used in place of the Stanford C++ Vector class\sidenote{pg 197}.
+
+\begin{figure}[!htbp]
+\begin{tabular}{lll}
+  \underline{Operation} & \underline{Stanford} & \underline{Std} \\
+  Empty Constructor & Vector$<$t$>$() & std::vector$<$t$>$() \\ %chktex 36
+  Fill Constructor & Vector$<$t$>$(size,val) & std::vector$<$t$>$(size,val) \\  %chktex 36
+  Size Query Method & v.size() & v.size() \\  %chktex 36
+  Empty Predicate & v.isEmpty() & v.empty() \\  %chktex 36
+  Element Selector & v.get(idx) & v.at(idx) \\  %chktex 36
+                   & v[idx] & v[idx] \\  %chktex 36
+  Element Mutator & v.set(idx,val) & v[idx] = val \\ %chktex 36
+  Add to Back & v.add(val) & v.push\_back(val) \\ %chktex 36
+  Insert at & v.insertAt(idx,val) & v.insert(std::begin(v) + idx, val) \\ %chktex 36
+  Remove at & v.removeAt(idx) & v.erase(std::begin(v) + idx) \\ %chktex 36
+  Erase all & v.clear() & v.clear() \\ %chktex 36
+  Concatenate & v + w & v.insert(std::end(v),std::begin(w),std::end(w)) \\ %chktex 36
+  Repeated Add & v += a,b,c,d,e \ldots & N.A. \\ %chktex 36
+\end{tabular}
+\caption{Vector to std::vector}
+\end{figure}
+
+\subsection*{Stack}
+
+The std::stack class\sidenote{\url{http://www.cplusplus.com/reference/stack/stack/}} can be used in place of the Stanford Stack class\sidenote{pg 211}.
+
+\begin{figure}[!htbp]
+\begin{tabular}{lll}
+  \underline{Operation} & \underline{Stanford} & \underline{Std} \\
+  Empty Constructor & Stack$<$t$>$() & std::stack$<$t$>$() \\ %chktex 36
+  Size Query & s.size() & s.size() \\ %chktex 36
+  Empty Predicate & s.isEmpty() & s.empty() \\ %chktex 36
+  Push Element & s.push(val) & s.push(val) \\ %chktex 36
+  Pop Element & s.pop() & s.pop() \\ %chktex 36
+  Peek at Top & s.peek() & s.top() \\ %chktex 36
+  Remove all Elements & s.clear() & N.A. \\ %chktex 36
+\end{tabular}
+\caption{Stack to std::stack}
+\end{figure}
+
+\newpage \thispagestyle{empty}
+
+\subsection*{Queue}
+
+The std::queue class\sidenote{\url{http://www.cplusplus.com/reference/queue/queue/}} can be used in place of the Stanford C++ Queue class\sidenote{pg 217}.
+
+\begin{figure}[!htbp]
+\begin{tabular}{lll}
+  \underline{Operation} & \underline{Stanford} & \underline{Std} \\
+  Empty Constructor & Queue$<$t$>$() & std::queue$<$t$>$() \\ %chktex 36
+  Size Query & q.size() & q.size() \\ %chktex 36
+  Empty Predicate & q.isEmpty() & q.empty() \\ %chktex 36
+  Enqueue Element & q.enqueue(val) & s.push\_back(val) \\ %chktex 36
+  Dequeue Element & s.dequeue() & s.pop\_front() \\ %chktex 36
+  Peek at Front & s.peek() & s.front() \\ %chktex 36
+  Remove all Elements & s.clear() & N.A. \\ %chktex 36
+\end{tabular}
+\caption{Queue to std::queue}
+\end{figure}
+
+\subsection*{Map}
+
+The std::map class\sidenote{\url{http://www.cplusplus.com/reference/map/map/}} can be used in place of the Stanford C++ Map class\sidenote{pg 226}.
+
+\begin{figure}[!htbp]
+\begin{tabular}{lll}
+  \underline{Operation} & \underline{Stanford} & \underline{Std} \\
+  Empty Constructor & Map$<$kt,vt$>$() & std::map$<$kt,mt$>$() \\ %chktex 36
+  Size Query & m.size() & m.size() \\ %chktex 36
+  Empty Predicate & m.isEmpty() & m.empty() \\ %chktex 36
+  Select Element & q.get(key) & m.at(key) \\ %chktex 36
+   & m[key] & m[key] \\
+  Add Element & m.put(key,val) &  m.insert(std::pair$<$kt,vt$>$(key,val))  \\ %chktex 36
+    & m[key] = val & m[key] = val \\
+  Remove Key+Value & m.remove(key) & m.erase(key) \\ %chktex 36
+  Key Containment Predicate & m.containsKey(key) & m.count(key) \\ %chktex 36
+  Remove all Elements & m.clear() & m.clear() \\ %chktex 36
+\end{tabular}
+\caption{Map to std::map}
+\end{figure}
+
+Alternatively, one can use std::unordered\_map\sidenote{\url{http://www.cplusplus.com/reference/unordered_map/unordered_map/}} to improve the performance of certain map operations.
+
+
+\newpage \thispagestyle{empty}
+
+\subsection*{Set}
+
+The std::set class\sidenote{\url{http://www.cplusplus.com/reference/set/set/}} can be used in place of the Stanford C++ Set class\sidenote{pg 232}. The std::includes, std::set\_intersection, std::set\_difference, and std::set\_union functions are found in the \textit{algorithm} library\sidenote{\url{http://www.cplusplus.com/reference/algorithm/}}
+
+\begin{figure}[!htbp]
+\begin{tabular}{lll}
+  \underline{Operation} & \underline{Stanford} & \underline{Std} \\
+  Empty Constructor & Set$<$t$>$() & std::set$<$t$>$() \\ %chktex 36
+  Size Query & s.size() & s.size() \\ %chktex 36
+  Empty Predicate & s.isEmpty() & s.empty() \\ %chktex 36
+  Add Element & s.add(val) & s.insert(val) \\ %chktex 36
+  Remove Element & s.remove(key) & s.erase(key) \\ %chktex 36
+  Containment Predicate & s.contains(val) & s.count(key) \\ %chktex 36
+  Remove all Elements & s.clear() & s.clear() \\ %chktex 36
+  Is Subset of & s.isSubsetOf(r) & std::includes(std::begin(s),std::end(s), \\ %chktex 36
+   & & std::begin(r),std::begin(s))   \\ %chktex 36
+  Get First & s.first() & *(std::begin(s)) \\ %chktex 36
+  Union & s + r & std::union(std::begin(s),std::end(s), \\ %chktex 36
+  & & std::begin(r),std::end(r),std::begin(result\_set)) \\ %chktex 36
+
+  Intersection & s * r & std::set\_intersection(std::begin(s),std::end(s), \\ %chktex 36
+  & & std::begin(r),std::end(r),std::begin(result\_set)) \\ %chktex 36
+  Difference & s $-$ r & std::set\_difference(std::begin(s),std::end(s), \\ %chktex 36
+  & & std::begin(r),std::end(r),std::begin(result\_set))\\ %chktex 36
+\end{tabular}
+\caption{Set to std::set}
+\end{figure}
+
+Alternatively, one can use std::unordered\_set\sidenote{\url{http://www.cplusplus.com/reference/unordered_set/unordered_set/}} to improve the performance of certain set operations.
+
+
+\end{document}
