@@ -7,7 +7,7 @@
 \setlength{\textwidth}{6.5in} \setlength{\oddsidemargin}{0in}
 \setlength{\evensidemargin}{0in}
 
-\title{COMP220 - Lab 6}
+\title{COMP220 --- Lab 6 \& Homework 5}
 \author{ }
 \date{Fall 2015}
 
@@ -15,18 +15,27 @@
 \maketitle
 
 \begin{abstract}
-For this lab you'll work with the Grid class (pg 210) and practice doing an important traversal pattern known as a \textit{Stencil Code} in which your examine the neighboring locations in a grid for each spot in that grid. This pattern is used in many imagine processing contexts as well as the famous Conway's Game of Life. 
+In this lab you'll tackle a version of the procedure described in problem 21 from chapter 5 of the text. This problem let's you work with some basic map and set methods.
 \end{abstract}
 
-\section{Problem and Adaptations}
+\subsection*{The Problem}
 
-The problem you'll be dealing with is the Minesweeper problem listed in chapter 5 exercise 10. Your solution should:
-\begin{itemize}
-\item Work on any size grid
-\item Utilize a helper procedure named \textit{getCount} (which you must design and write) that is given the grid\textit{mines} (as discussed in the book) and a \textit{row} and \textit{column} index. It then returns the mine count for the location \textit{mines[row][col]}. Note this helper is the core logic to the whole problem. With it written, \textit{fixCounts} just becomes a simple matter of ``visit each spot in \textit{mines}, run \textit{getCounts}, and set the return value to the appropriate location in \textit{counts}''.
-\end{itemize}
-After you document, declare, stub, and write tests for both procedures. Focus your implementation efforts on the helper. By the end of the day, submit your work as assignment \textit{lab6}. There is no homework, but you're strongly encouraged to finish this assignment up as you can get a lot of mileage from stencil code logic.
+Problem 21 in chapter 5 of the text describes an instance of the map inversion problem. The real difficulty here is that where keys  are unique, values need not be.  For example, an area code (key) is attributed to a single state (value) but states can have multiple area codes associated with them.
 
- 
+You need to write an \textit{invert} procedure which takes an integer to string map and produces a string to set of integers map.  In terms of the area code problem this would be taking a map of area codes to states to a state to area codes map.
+
+To practice with mutator design let's envision this procedure as a mutator. You'll give it the map to be inverted by constant reference and a reference to the map that is to be the result. We'll assume the result map is initially empty.
+
+\subsection*{Lab}
+
+You goal in lab is to work on the documentation, a stub, and then focus entirely on tests. If I see a single stitch of implementation without a complete set of tests you can expect to get a 1 for the lab.
+
+\subsection*{Homework}
+
+\begin{center}
+  \textbf{Due Monday 10/3} Submit as assignment \textit{hwk5}.
+\end{center}
+
+Finish the implementation of \textit{invert}. 
 
 \end{document}
