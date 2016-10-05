@@ -1,0 +1,213 @@
+\documentclass[nobib]{tufte-handout}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{listings,color}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{
+  frame=tb,
+  language=C++,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=left,
+  stepnumber=1,
+  firstnumber=1,
+  numbersep=5pt,
+  numberfirstline=true,
+  numberstyle=\tiny\color{black},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+\title{COMP 220 \\ Lecture Notes 08 \\ Structural Traversal of Stacks, Queues, Maps, and Sets}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+In these notes we look at structural traversal patterns for our new non-vector typed ADTs.
+\end{abstract}
+
+\section{Loop-Based Traversal}
+
+Traversing stacks, queues, maps, and sets is different than traversing a vector or a string. We cannot simply count off index values.
+
+
+\subsection{std::stack}
+
+You cannot traverse a std::stack without mutating the stack.  You must pop the top in order to get to the next.  In general, do not count based on the stack size as the the size changes everytime you push and pop.
+
+\begin{figure}[!htbp]
+\begin{lstlisting}
+  std::stack< ... > st;
+  ...
+  while( !st.empty() ){
+    ...st.top()... //non-destructive top checking
+
+    ...st.pop()... // the ++ of stack traversal
+  }
+\end{lstlisting}
+\caption{Top to bottom traversal of a stack}
+\end{figure}
+
+
+\subsection{std::queue}
+
+Like stack traversal, queue traversal is a destructive process. You must remove the front in order to get to the next front.
+
+\begin{figure}[!htbp]
+\begin{lstlisting}
+  std::queue< ... > qu;
+  ...
+  while( !qu.empty() ){
+    ...qu.front()... //non-destructive front checking
+
+    ...qu.pop()... // the ++ of queue traversal
+  }
+\end{lstlisting}
+\caption{Front to Back traversal of a queue}
+\end{figure}
+
+\subsection{std::map}
+
+A map only gets a sense of order from its implementation.   Abstractly, they are best viewed as a set of key+value pairs. The std::map implementation effectively orders data in key order.  The simplest way to traverse a std::map is with the range-based for loop \sidenote{aka for-each loop}. This loop presents you with a std::pair$<$kt,vt$>$  where kt is the key type and vt is the value type for the map\sidenote{\url{http://www.cplusplus.com/reference/utility/pair/}}.
+
+Declaring the elements of the map as pairs will present you with copies of the map data.
+\begin{figure}[!htbp]
+\begin{lstlisting}
+  std::map<kt,vt> mp;
+  ...
+  // for each key value pair kvp in map mp...
+  for( std::pair<kt,vt> kvp : mp ){
+      ...kvp.first... //copy of the key
+      ...kvp.second... //copy of the value
+      ...mp[kvp.first]... //the actual value
+  }
+\end{lstlisting}
+\caption{Map Traversal with by-value pairs}
+\end{figure}
+
+For efficiency reasons or because we intend to do a mutation while we traverse we might want access to the actual key and value data through the pair. Keys cannot be mutated but values can. Thus, we use const type keys and a by-reference pair.
+
+\begin{figure}[!htbp]
+\begin{lstlisting}
+  std::map<kt,vt> mp;
+  ...
+  // for each key value pair kvp in map mp...
+  for( std::pair<const kt,vt>& kvp : mp ){
+      ...kvp.first... //const reference to the key
+      ...kvp.second... //reference to the the value
+      ...mp[kvp.first]... //same as kvp.second
+  }
+\end{lstlisting}
+\caption{Map Traversal with by-reference pairs}
+\end{figure}
+
+Finally, we can avoid the types of the pair altogether by using the C++11 auto type\sidenote{You should treat this as a way to simplify complex type declarations and not a way to dodge a lack of knowledge of type}.
+\begin{figure}[!htbp]
+\begin{lstlisting}
+  std::map<kt,vt> mp;
+  ...
+  // for each key value pair kvp in map mp...
+  for( const auto& kvp : mp ){
+      ...kvp.first... //const reference to the key
+      ...kvp.second... //reference to the the value
+      ...mp[kvp.first]... //same as kvp.second
+  }
+\end{lstlisting}
+\caption{Read only Map Traversal with const-reference auto-typed pairs}
+\end{figure}
+
+\subsection{std::set}
+
+Set traversal is also best accomplished via range based for loops. This traversal is more straight forward than map traversal.
+
+\begin{figure}[!htbp]
+\begin{lstlisting}
+  std::set<t> s;
+  ...
+  // for each element of type t in set<t> s
+  for( t e : s ){
+      ...e... //copy of current set element e
+  }
+\end{lstlisting}
+\caption{Traversal of set by-value}
+\end{figure}
+
+If the copy cost of a by-value traversal is a concern than you can do a constant reference traversal as well.
+
+\begin{figure}[!htbp]
+\begin{lstlisting}
+  std::set<t> s;
+  ...
+  // for each element of type t in set<t> s
+  for( const t& e : s ){
+      ...e... //copy of current set element e
+  }
+\end{lstlisting}
+\caption{Traversal of set by const-reference}
+\end{figure}
+
+You cannot to a set traversal that allows you to mutate the set elements.  If you need to modify the set contents you should be using set removal and insert operations to remove an item and add the ``new''value.
+
+\section{Recursion}
+
+\subsection{Stacks and Queues}
+
+Once again, we have no ability to access the ``rest'' of a stack or a queue without discarding the first. The structures must be traversed through mutation. This means recursive procedures for this structures must pass the structures by reference.
+
+\begin{figure}[!htbp]
+\begin{lstlisting}
+
+  ... stackfoo(std::stack<t>& st, ...){
+
+    if( st.empty() ){
+      ...
+      return ...;
+    }
+
+    ...st.top()...
+    ...st.pop()...
+    ...stackfoo(st,...)...
+
+    return ... ;
+  }
+\end{lstlisting}
+\caption{Recursive Traversal of Stack data}
+\end{figure}
+
+\begin{figure}[!htbp]
+\begin{lstlisting}
+
+  ... queuefoo(std::queue<t>& qu, ...){
+
+    if( qu.empty() ){
+      ...
+      return ...;
+    }
+
+    ...qu.front()...
+    ...qu.pop()...
+    ...queuefoo(qu,...)...
+
+    return ... ;
+  }
+\end{lstlisting}
+\caption{Recursive Traversal of Queue data}
+\end{figure}
+
+\subsection{Maps and Sets}
+
+At this point you do not want to do recursive procedures for maps and sets. It requires utilizing C++ iterators and opens a can of worms we'd rather not open at this point.  
+
+
+\end{document} %chktex 17
