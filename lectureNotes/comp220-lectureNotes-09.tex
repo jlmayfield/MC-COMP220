@@ -1,0 +1,132 @@
+\documentclass[nobib]{tufte-handout}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{listings,color}
+\usepackage{marginfix}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{
+  frame=tb,
+  language=C++,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=left,
+  stepnumber=1,
+  firstnumber=1,
+  numbersep=5pt,
+  numberfirstline=true,
+  numberstyle=\tiny\color{black},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+\title{COMP 220 \\ Lecture Notes 09 \\ Exceptions and Exception Handling}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+These notes briefly cover exceptions and exception handling in C++.
+\end{abstract}
+
+\section{Runtime Errors}
+
+Until now we've mostly assumed that arguments passed to procedures meet the preconditions. This is usually a dangerous assumption. You can use other procedures to check and enforce preconditions, sure, but what do you do in those procedures when they detect some data doesn't hold mustard?  The answer is to raise an error to the user/client which in programming is called \textsc{throwing an exception}.
+
+When a procedure throws an exception it directs that exception to the procedure that called it. This process bypass the usual return mechanism. A procedure can throw an exception or return, but not both. The caller of the procedure that threw can either \textsc{catch} and handle the exception or do nothing and in doing so throw the exception up to its caller. If no procedure catches the exception and it makes its way to main, then the program with crash.
+
+Crashing or ending a program when a run-time error occurs is often the right thing to do.  Without exceptions, the operating system is going to do this in a very abrupt manner. If you had files open for output, then they won't be saved and you're going to lose some data. What's more, the OS might do nothing more than tell you a segmentation fault occurred without giving you any clue as to what happened\sidenote{compare out-of-bounds vector access with at and operator[]}. Exception handling lets you take the time to save work, write error logs prior to closing down, and report to the user the nature of the problem.
+
+\section{Exceptions in the Standard Library}
+
+The \textit{throw} operator is used to throw exceptions. The C++ stdexcept\sidenote{\url{http://www.cplusplus.com/reference/stdexcept/}} comes with a set of pre-defined exception types for many common program errors and these exception types are defined in a heirarchical manner like the I/O streams we've worked with previously.
+
+At the top of the exception hierarchy is std::exception. Next there are two categories of exceptions: \textit{std::logic\_error}\sidenote{\url{http://www.cplusplus.com/reference/stdexcept/logic_error/}} and \textit{std::runtime\_error}\sidenote{\url{http://www.cplusplus.com/reference/stdexcept/runtime_error/}}. The later is used for errors that can only be caught at runtime where the former is used for things that could have been caught at compile time. Each of these types of exceptions has more specific variants that you are encouraged to investigate. In the event that you need a more specific type of error you can use Object-Oriented programming to extend the exception hierarchy with your own custom exception types.
+
+\section{Throwing Exceptions}
+
+Throwing exceptions is done with the \textit{throw} operator which is used in the same fashion as \textit{return}. Exceptions are constructed like other objects and typically take a single string type argument. That string is the error message/description.
+
+Let's say you were doing some kind of calculator program and needed to detect divide by zero errors. When you detect the error you could use a throw statement like the one shown in figure~\ref{throwing}.
+
+\begin{figure}[htbp!]
+\begin{lstlisting}
+  throw std::runtime_error("Divide by Zero detected");
+\end{lstlisting}
+\caption{Throwing a generic divide by zero error}
+\label{throwing}
+\end{figure}
+
+\section{Catching Exceptions}
+
+Catching exceptions requires a \textit{try..catch} statement. The try block contains the code the might throw an exception. It is followed by a series of catch blocks for the types of exceptions the code might generate. Each exception type includes a variable declaration for the exception.
+
+\begin{figure}[htbp!]
+  \begin{lstlisting}
+    try{
+      // code that might throw
+    }
+    catch( exception_type exception_name){
+      // what to do if exception of exception_type is thrown
+      // exception_name is a variable for the exception object thrown.
+    }
+    // more catch blocks if needed
+
+  \end{lstlisting}
+\label{trycatchtemplate}
+\caption{Template for Try Catch statements}
+\end{figure}
+
+You can access the exception error message/description through the \textit{what} method. Figure~\ref{trycatchdemo} demonstrates exception handling.
+
+\begin{figure}[htbp!]
+  \begin{lstlisting}
+    try{
+      procedure_that_might_throw();
+    }
+    catch( std::runtime_error e ){
+      std::err << "Error Detected: " << e.what() << '\n';
+      std::exit(EXIT_FAILURE); //ends program with error code
+    }
+  \end{lstlisting}
+\label{trycatchdemo}
+\end{figure}
+
+The procedure \textit{std::exit}\sidenote{\url{http://www.cplusplus.com/reference/cstdlib/exit/}} terminates the whole program using the normal program termination process and can be used if you aren't in \textit{main} and cannot or don't want to return back to main and return from there.
+
+\section{Testing with Exceptions and gTest}
+
+If you're designing procedures that might throw errors then you need to test that errors are thrown when they should be. The gTest library provides EXPECT statements for this purpose\sidenote{\url{https://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md\#exception-assertions}}.
+
+When a procedure might throw several types of exceptions you should use \textit{EXPECT\_THROW}.
+\begin{figure}[htbp!]
+  \begin{lstlisting}
+    EXPECT_THROW( might_throw(5) , std::runtime_error );
+    EXPECT_THROW( might_throw(10) , std::logic_error );
+  \end{lstlisting}
+\end{figure}
+
+If the type of the error isn't important to the test, you can use \textit{EXPECT\_THROW\_ANY}.
+\begin{figure}[htbp!]
+  \begin{lstlisting}
+    EXPECT_THROW_ANY( might_throw(5) );
+  \end{lstlisting}
+\end{figure}
+
+Finally, if you need or want to verify that no errors occur there is \textit{EXPECT\_NO\_THROW}.
+\begin{figure}[htbp!]
+  \begin{lstlisting}
+    EXPECT_NO_THROW( might_throw(0) );
+  \end{lstlisting}
+\end{figure}
+
+\end{document}
