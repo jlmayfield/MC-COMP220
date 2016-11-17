@@ -33,95 +33,42 @@
 \setlength{\textwidth}{6.5in} \setlength{\oddsidemargin}{0in}
 \setlength{\evensidemargin}{0in}
 
-\title{COMP220 - Lab 9}
+\title{COMP220 --- Lab 9 \& Homework 7}
 \author{ }
-\date{Fall 2015}
+\date{Fall 2016}
 
 \begin{document}
 \maketitle
-\thispagestyle{empty}
+
 
 \begin{abstract}
-This lab has 2 parts. The first is some practice building your intuition about logarithms and logarithmic growth. The later is some pointer practice.
+In this lab you'll work on parts of the array based Queue implementation. In doing so you'll cut your teeth on the basic use of Valgrind's memcheck feature for detecting memory leaks. Submit what you have done at the end of lab as assignment \textit{lab9} then complete the remainder and submit it as assignment \textit{hwk7}.
 \end{abstract}
 
-\begin{enumerate}
-\item Fill in the following table in three phases. First without using a calculator, fill in the integer lower and upper bound. If the logarithm is an exact integer, then put that as both the lower and upper bound. Then, take a shot a guessing the logarithm's actual value out to 2 decimal places. Finally, use a calculator to compute the actual log to 2 places and fill that in for the final column. When computing actual logarithms, you may only use the log base 10 function on a calculator. Logarithms with a base less than 10 should be computed using the base conversion formula:
-\[
-\log_b(n) = \dfrac{\log_a(n)}{\log_a(b)}
-\]
-
-\begin{center}
-\begin{tabular}{|l|l|l|l|l|}
-\hline
-Logarithm & Lower Int. & Upper Int. & Guesstimate & Actual Value\\ \hline
-$\log_2(17)$ &  &  &  & \\ 
- & & & & \\ \hline
-$\log_2(725)$  &  &  &  & \\ 
- & & & & \\ \hline
-$\log_2(1024)$ &  &  &  & \\ 
- & & & & \\ \hline
-$\log_2(7)$ &  &  &  & \\ 
- & & & & \\ \hline
- $\log_8(7)$ &  &  &  & \\ 
- & & & & \\ \hline
-$\log_8(178)$ &  &  &  & \\ 
- & & & & \\ \hline
-$\log_{16}(25)$ &  &  &  & \\ 
- & & & & \\ \hline
-$\log_{16}(333)$ &  &  &  & \\ 
- & & & & \\ \hline
-$\log_{10}(15)$ &  &  &  & \\ 
- & & & & \\ \hline
-$\log_{10}(150)$ &  &  &  & \\ 
- & & & & \\ \hline
-$\log_{10}(145787)$ &  &  &  & \\ 
- & & & & \\ \hline
-\end{tabular}
-\end{center}
-\newpage \thispagestyle{empty}
-
-\item The formula for the conversion from one logarithm base to another tells us that for any two bases $a$ and $b$, $\log_a(n)$ differs from $\log_b(n)$ by exactly a factor of $\frac{1}{\log_b(a)}$. Compute this factor for base $a=2$ and each of the bases listed in the table below:
-
-\begin{center}
-\begin{tabular}{|l|l|}
-\hline Base & Conversion Factor for $\log_2$ \\ \hline \hline
-8 & \\
-  & \\ \hline
-10 & \\
-  & \\ \hline
-16 & \\
-  & \\ \hline
-23 & \\
-  & \\ \hline
-127 & \\
-  & \\ \hline
-256 & \\
-  & \\ \hline
-\end{tabular}
-\end{center}
-What do you notice about converting to $\log_2$ from some base $b=2^k$?
-
-\newpage \thispagestyle{empty}
-
-
-\item Using pointers introduces a different notion of sameness. The following problem descriptions clearly lay this out in a familiar search-like context.
-
-\begin{quote}
-1. Given a Vector of pointers to integers and a pointer to an integer, determine if any of the pointers in the vector point to the same integer value that the integer pointer points to. Put another way: Does anything in the vector point to something that has the same value that the given pointer's target has.  This is essentially linear search by with a layer of pointers over the (potential) values.
-\end{quote}
-
-\begin{quote}
-2. Given a Vector of pointers to integers and a pointer to an integer, determine if any of the pointers in the vector point to the same location that the integer pointer points to.  Put another way: Does anything in the vector point to the same location as the given pointer. This is essentially search for addresses of integers and not the integers themselves.
-\end{quote}
+We'll work on the remaining Queue methods in the following order. Be very mindful of this order when writing tests. Because we're putting assignment and copy construction last, you shouldn't use those in writing tests for methods earlier on the list. Properly testing the output and equality operators will require push\_back, but you should at least get them working on the empty queue then come back and verify they continue to work on non-empty queues. We're doing them first to play nice with gTests. In implementing these methods, don't hesitate to write private helper methods and procedures for work with arrays that occurs in multiple Queue methods.
 
 \begin{enumerate}
-\item Restate these problems using the technical terms l-value, r-value, and dereference.  
-\vspace{2in}
-\item (To be done in Code::Blocks) Design and implement functions that solve these two problems. Call the function for solving (1) \textit{hasValue} and for (2) \textit{hasAlias}. Be certain to write documentation, declaration, stubs, and tests before implementing these functions. Tests will give you important practice with declaring and initializing pointers where the implementation works with previously initialized pointers. Submit the code as \textit{lab9} using handin.
-
+  \item operator$<<$ \newline
+    Print the queue contents on a single line as comma separated values surrounded by parenthesis, i.e. $(1,3,5)$. No newline at the end. No comma after the final value. There are a fair amount of hoops to jump to get this to work with templates. You just need to fill in the implementation and write some tests. The hoops will be explained Friday.
+  \item operator$==$ \newline
+    This should be true if the two Queues will behave the same. This allows for equality between queues with different capacity and different locality of data within the array.
+  \item push\_back \newline
+      If adding the item fills the array, then double the capacity.
+  \item pop\_front
+    If the capacity is larger than the initial capacity of a default queue and removing the item causes the array to be at 30\% capacity then reduce capacity by half.
+  \item copy constructor
+  \item operator$=$
 \end{enumerate}
 
+Work through the list one method at a time. For each method you should first write documentation, then tests, then work out the implementation. Play around with using different contained types in your tests so that you don't get too attached to one particular type.
 
-\end{enumerate}
+\section{Using Valgrind to find Leaks}
+
+Valgrind provides a suite of Linux tools that let you profile various parts of your program. The \textit{memcheck} tool runs your code and checks for leaks. It requires a running executable as a memory leak is a runtime problem and not a static, compile time problem. We'll typically run it along side our gTests.
+
+Code::Blocks has a Valgrind plugin that makes running memcheck dead simple. In the menu bar you'll find a Valgrind option and in that menu you'll see an option for \textit{Run Memcheck}. Simply select this and the current build will be run through Valgrind.  If your program leaks memory, then a message window will show up in Code::Blocks with some information about the nature of the leak. To test this, simply comment out the delete line in the destructor and run the core tests again.  The program will leak because the Queue destructor doesn't delete the array when the Queue is cleared from the runtime stack. 
+
+Now that we're using heap memory, you need to not only design and run tests for behavioral correctness but run tests that when run through memcheck will verify the absence of memory leaks in your code.
+
+
 \end{document}
